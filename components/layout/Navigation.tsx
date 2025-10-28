@@ -14,8 +14,7 @@ import {
   Home,
   FileText,
   TrendingUp,
-  LogOut,
-  QrCode
+  LogOut
 } from 'lucide-react';
 import { useCurrentUser, useAppContext } from '@/app/lib/contexts/AppContext';
 
@@ -56,11 +55,6 @@ const studentNavItems = [
     title: '나의 학습지',
     href: '/student/assignments',
     icon: FileText
-  },
-  {
-    title: 'QR 스캔',
-    href: '/scan',
-    icon: QrCode
   },
   {
     title: '리포트',
