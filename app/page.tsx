@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAppContext } from '@/app/lib/contexts/AppContext';
 import { dummyUsers } from '@/app/lib/data/dummy-data';
-import { BookOpen, Users, QrCode } from 'lucide-react';
+import { BookOpen, Users } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Home() {
@@ -134,27 +134,6 @@ export default function Home() {
           </Card>
         </div>
 
-        {/* QR 코드 스캔 바로가기 */}
-        <div className="mt-8 text-center">
-          <Card className="inline-block bg-white/60 backdrop-blur-sm border-dashed border-2 border-gray-300 hover:border-blue-400 transition-colors duration-200">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <QrCode className="h-6 w-6 text-blue-600" />
-                <span className="text-lg font-semibold text-gray-800">OMR 카드 입력</span>
-              </div>
-              <p className="text-sm text-gray-600 mb-4">
-                학습지 QR 코드를 스캔하여 바로 답안을 입력하세요
-              </p>
-              <Button 
-                variant="outline" 
-                className="border-blue-300 text-blue-700 hover:bg-blue-50"
-                onClick={() => router.push('/scan')}
-              >
-                QR 코드 스캔하기
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
 
         <div className="mt-6 text-center text-sm text-gray-500">
           <p>실제 서비스에서는 대교 하이캠퍼스 계정으로 로그인합니다.</p>

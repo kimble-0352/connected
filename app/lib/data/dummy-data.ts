@@ -1703,6 +1703,193 @@ export const dummyFolders: Folder[] = [
 
 // 더미 학습지 데이터
 export const dummyWorksheets: Worksheet[] = [
+  // 테스트용 기본 학습지 (일반적인 ID 패턴들을 지원)
+  {
+    id: 'test-worksheet',
+    title: '테스트용 OMR 학습지',
+    description: 'QR 코드 테스트를 위한 기본 학습지입니다.',
+    subject: 'math',
+    teacherId: 'teacher-1',
+    status: 'published',
+    createdAt: '2024-03-01T09:00:00Z',
+    updatedAt: '2024-03-01T09:00:00Z',
+    tags: ['테스트', '기본'],
+    folderId: 'folder-1',
+    qrCode: 'enabled',
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: true,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'test-q-1',
+        subject: 'math',
+        content: '다음 중 순환소수인 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-1',
+          lessonId: 'lesson-2-1-1-1'
+        },
+        choices: ['0.25', '0.333...', '0.5', '0.75'],
+        correctAnswer: '0.333...',
+        explanation: '0.333...은 1/3을 소수로 나타낸 순환소수입니다.',
+        correctRate: 75,
+        tags: ['순환소수', '기본개념'],
+        similarQuestions: []
+      },
+      {
+        id: 'test-q-2',
+        subject: 'math',
+        content: '2 + 3 = ?',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-1',
+          lessonId: 'lesson-2-1-1-1'
+        },
+        correctAnswer: '5',
+        explanation: '2와 3을 더하면 5입니다.',
+        correctRate: 95,
+        tags: ['덧셈', '기본연산'],
+        similarQuestions: []
+      },
+      {
+        id: 'test-q-3',
+        subject: 'math',
+        content: '다음 식을 간단히 하시오: 2x + 3x',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-1',
+          lessonId: 'lesson-2-1-1-2'
+        },
+        correctAnswer: '5x',
+        explanation: '동류항끼리 계수를 더하면 2x + 3x = 5x입니다.',
+        correctRate: 80,
+        tags: ['동류항', '식의계산'],
+        similarQuestions: []
+      }
+    ],
+    difficultyDistribution: {
+      low: 1,
+      medium: 2,
+      high: 0,
+      highest: 0
+    },
+    averageCorrectRate: 83,
+    totalQuestions: 3
+  },
+  // 추가 테스트 학습지들 (다양한 ID 패턴 지원)
+  {
+    id: 'worksheet123',
+    title: '간단한 수학 문제',
+    description: 'worksheet123 ID 패턴 테스트용',
+    subject: 'math',
+    teacherId: 'teacher-1',
+    status: 'published',
+    createdAt: '2024-03-01T09:00:00Z',
+    updatedAt: '2024-03-01T09:00:00Z',
+    tags: ['테스트'],
+    folderId: 'folder-1',
+    qrCode: 'enabled',
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: true,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'simple-q-1',
+        subject: 'math',
+        content: '5 × 3 = ?',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-1-1',
+          sectionId: 'section-1-1-1',
+          lessonId: 'lesson-1-1-1-1'
+        },
+        correctAnswer: '15',
+        explanation: '5에 3을 곱하면 15입니다.',
+        correctRate: 90,
+        tags: ['곱셈', '기본연산'],
+        similarQuestions: []
+      }
+    ],
+    difficultyDistribution: {
+      low: 1,
+      medium: 0,
+      high: 0,
+      highest: 0
+    },
+    averageCorrectRate: 90,
+    totalQuestions: 1
+  },
+  {
+    id: 'demo-worksheet',
+    title: '데모 학습지',
+    description: 'demo-worksheet ID 패턴 테스트용',
+    subject: 'math',
+    teacherId: 'teacher-1',
+    status: 'published',
+    createdAt: '2024-03-01T09:00:00Z',
+    updatedAt: '2024-03-01T09:00:00Z',
+    tags: ['데모', '테스트'],
+    folderId: 'folder-1',
+    qrCode: 'enabled',
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: true,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'demo-q-1',
+        subject: 'math',
+        content: '다음 중 가장 큰 수는?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-1-1',
+          sectionId: 'section-1-1-1',
+          lessonId: 'lesson-1-1-1-1'
+        },
+        choices: ['0.5', '0.7', '0.3', '0.9'],
+        correctAnswer: '0.9',
+        explanation: '0.9가 가장 큰 수입니다.',
+        correctRate: 85,
+        tags: ['수의크기', '기본개념'],
+        similarQuestions: []
+      }
+    ],
+    difficultyDistribution: {
+      low: 1,
+      medium: 0,
+      high: 0,
+      highest: 0
+    },
+    averageCorrectRate: 85,
+    totalQuestions: 1
+  },
   {
     id: 'worksheet-1761629960844',
     title: '중2-1 유리수와 순환소수 종합 학습지',

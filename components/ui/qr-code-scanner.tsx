@@ -111,7 +111,7 @@ export function QRCodeScanner({ onScanSuccess, onError, className }: QRCodeScann
       // 여기서는 데모용 시뮬레이션
       
       // QR 코드가 감지되었다고 가정하고 URL 패턴 체크
-      const mockDetectedData = 'https://your-domain.com/omr/worksheet123';
+      const mockDetectedData = 'https://your-domain.com/omr/test-worksheet';
       
       // URL 패턴 검증
       if (mockDetectedData.includes('/omr/')) {
@@ -227,7 +227,7 @@ export function QRCodeScanner({ onScanSuccess, onError, className }: QRCodeScann
               id="manual-input"
               value={manualInput}
               onChange={(e) => setManualInput(e.target.value)}
-              placeholder="https://your-domain.com/omr/worksheet123"
+              placeholder="https://your-domain.com/omr/test-worksheet"
               className="flex-1"
             />
             <Button onClick={handleManualSubmit}>

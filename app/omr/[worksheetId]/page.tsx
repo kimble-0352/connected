@@ -31,9 +31,48 @@ export default function OMRCardPage() {
     const loadWorksheet = async () => {
       setIsLoading(true);
       
+      // 디버깅 정보 출력
+      console.log('=== OMR 페이지 디버깅 정보 ===');
+      console.log('요청된 worksheetId:', worksheetId);
+      console.log('사용 가능한 학습지 ID들:', dummyWorksheets.map(w => ({ id: w.id, title: w.title })));
+      console.log('총 학습지 개수:', dummyWorksheets.length);
+      
       // 실제 더미 데이터에서 학습지 찾기
       setTimeout(() => {
-        const foundWorksheet = dummyWorksheets.find(w => w.id === worksheetId);
+        let foundWorksheet = dummyWorksheets.find(w => w.id === worksheetId);
+        
+        // 정확한 ID로 찾지 못한 경우 추가 검색 시도
+        if (!foundWorksheet) {
+          console.warn('정확한 ID로 학습지를 찾지 못함. 추가 검색 시도...');
+          
+          // 1. 대소문자 무시하고 검색
+          foundWorksheet = dummyWorksheets.find(w => w.id.toLowerCase() === worksheetId.toLowerCase());
+          
+          // 2. 부분 문자열로 검색
+          if (!foundWorksheet) {
+            foundWorksheet = dummyWorksheets.find(w => w.id.includes(worksheetId) || worksheetId.includes(w.id));
+          }
+          
+          // 3. 숫자 부분만 추출해서 검색 (worksheet-1, worksheet-2 등)
+          if (!foundWorksheet) {
+            const numericPart = worksheetId.match(/\d+/)?.[0];
+            if (numericPart) {
+              foundWorksheet = dummyWorksheets.find(w => w.id.includes(numericPart));
+            }
+          }
+          
+          // 4. 기본 학습지 사용 (첫 번째 published 학습지)
+          if (!foundWorksheet) {
+            console.warn('유사한 학습지도 찾지 못함. 기본 학습지 사용...');
+            foundWorksheet = dummyWorksheets.find(w => w.status === 'published') || dummyWorksheets[0];
+            
+            if (foundWorksheet) {
+              console.warn('기본 학습지 사용:', foundWorksheet.title);
+            }
+          }
+        }
+        
+        console.log('최종 선택된 학습지:', foundWorksheet ? foundWorksheet.title : '없음');
         
         if (foundWorksheet) {
           setWorksheet(foundWorksheet);
@@ -47,6 +86,11 @@ export default function OMRCardPage() {
             textAnswer: question.type !== 'multiple_choice' ? '' : undefined
           }));
           setAnswers(initialAnswers);
+        } else {
+          console.error('모든 방법으로도 학습지를 찾을 수 없습니다!');
+          console.error('요청된 ID:', worksheetId);
+          console.error('ID 타입:', typeof worksheetId);
+          console.error('사용 가능한 ID들:', dummyWorksheets.map(w => w.id));
         }
         setIsLoading(false);
       }, 1000);
@@ -161,10 +205,54 @@ export default function OMRCardPage() {
   if (!worksheet) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-lg">
           <CardContent className="pt-6 text-center">
-            <p className="text-red-600 mb-4">학습지를 찾을 수 없습니다.</p>
-            <Button onClick={() => router.back()}>돌아가기</Button>
+            <div className="mb-4">
+              <FileText className="h-16 w-16 text-red-400 mx-auto mb-4" />
+              <h2 className="text-xl font-semibold text-red-600 mb-2">학습지를 찾을 수 없습니다</h2>
+              <p className="text-sm text-gray-600 mb-4">
+                요청하신 학습지 ID: <code className="bg-gray-100 px-2 py-1 rounded text-xs">{worksheetId}</code>
+              </p>
+            </div>
+            
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-left">
+              <h3 className="font-medium text-yellow-800 mb-2">가능한 원인:</h3>
+              <ul className="text-sm text-yellow-700 space-y-1">
+                <li>• 잘못된 QR 코드를 스캔했을 가능성</li>
+                <li>• 학습지가 삭제되었거나 비활성화됨</li>
+                <li>• URL이 손상되었을 가능성</li>
+                <li>• 네트워크 연결 문제</li>
+              </ul>
+            </div>
+            
+            <div className="space-y-3">
+              <Button onClick={() => router.back()} className="w-full">
+                이전 페이지로 돌아가기
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => router.push('/scan')} 
+                className="w-full"
+              >
+                QR 코드 다시 스캔하기
+              </Button>
+              <Button 
+                variant="ghost" 
+                onClick={() => router.push('/')} 
+                className="w-full"
+              >
+                홈으로 이동
+              </Button>
+            </div>
+            
+            {process.env.NODE_ENV === 'development' && (
+              <div className="mt-4 p-3 bg-gray-100 rounded text-left">
+                <p className="text-xs text-gray-600 mb-2">개발자 정보:</p>
+                <p className="text-xs font-mono text-gray-500">
+                  사용 가능한 학습지: {dummyWorksheets.length}개
+                </p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
