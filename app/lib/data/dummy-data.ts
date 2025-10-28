@@ -1790,6 +1790,439 @@ export const dummyWorksheets: Worksheet[] = [
     averageCorrectRate: 83,
     totalQuestions: 3
   },
+  {
+    id: 'worksheet-1761633536038',
+    title: '중2-1 식의 계산 종합 학습지',
+    description: '단항식과 다항식의 계산부터 인수분해까지 다루는 종합 학습지입니다.',
+    subject: 'math',
+    teacherId: 'teacher-1',
+    status: 'published',
+    createdAt: '2024-03-02T10:00:00Z',
+    updatedAt: '2024-03-02T10:00:00Z',
+    tags: ['식의계산', '중간고사 대비', '종합'],
+    folderId: 'folder-2',
+    qrCode: 'enabled',
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: true,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'q-calc-001',
+        subject: 'math',
+        content: '다음 식을 계산하시오: 3x² × 2x³',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-1'
+        },
+        correctAnswer: '6x⁵',
+        explanation: '지수법칙에 의해 3 × 2 = 6, x² × x³ = x⁵이므로 답은 6x⁵입니다.',
+        correctRate: 85,
+        tags: ['지수법칙', '단항식의 곱셈'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-002',
+        subject: 'math',
+        content: '다음 중 (2x + 3)(x - 1)을 전개한 결과는?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'textbook',
+        sourceInfo: {
+          textbookName: '중학수학 2-1'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-2'
+        },
+        choices: ['2x² + x - 3', '2x² - 2x + 3x - 3', '2x² + x - 3', '2x² - x + 3'],
+        correctAnswer: '2x² + x - 3',
+        explanation: '(2x + 3)(x - 1) = 2x² - 2x + 3x - 3 = 2x² + x - 3',
+        correctRate: 72,
+        tags: ['다항식의 곱셈', '전개'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-003',
+        subject: 'math',
+        content: '다음 식을 인수분해하시오: x² - 5x + 6',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-3'
+        },
+        correctAnswer: '(x - 2)(x - 3)',
+        explanation: 'x² - 5x + 6 = (x - 2)(x - 3)입니다. 두 수의 곱이 6이고 합이 -5인 수는 -2와 -3입니다.',
+        correctRate: 68,
+        tags: ['인수분해', '이차식'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-004',
+        subject: 'math',
+        content: '다음 중 (a + b)² - (a - b)²을 간단히 한 결과는?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'school_exam',
+        sourceInfo: {
+          schoolName: '서울중학교',
+          examYear: 2024,
+          examType: '중간고사'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-3'
+        },
+        choices: ['2ab', '4ab', '2a²', '2b²'],
+        correctAnswer: '4ab',
+        explanation: '(a + b)² - (a - b)² = (a² + 2ab + b²) - (a² - 2ab + b²) = 4ab',
+        correctRate: 58,
+        tags: ['완전제곱식', '전개', '인수분해'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-005',
+        subject: 'math',
+        content: '다음 식을 계산하시오: (2x - 3y)² + (2x + 3y)²',
+        type: 'short_answer',
+        difficulty: 'high',
+        source: 'textbook',
+        sourceInfo: {
+          textbookName: '최상위 수학 2-1'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-3'
+        },
+        correctAnswer: '8x² + 18y²',
+        explanation: '(2x - 3y)² + (2x + 3y)² = (4x² - 12xy + 9y²) + (4x² + 12xy + 9y²) = 8x² + 18y²',
+        correctRate: 45,
+        tags: ['완전제곱식', '심화'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-006',
+        subject: 'math',
+        content: '다음 중 x⁴ - 16을 인수분해한 결과는?',
+        type: 'multiple_choice',
+        difficulty: 'highest',
+        source: 'school_exam',
+        sourceInfo: {
+          schoolName: '강남중학교',
+          examYear: 2024,
+          examType: '기말고사'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-3'
+        },
+        choices: ['(x² + 4)(x² - 4)', '(x² + 4)(x + 2)(x - 2)', '(x + 2)²(x - 2)²', '(x + 4)(x - 4)'],
+        correctAnswer: '(x² + 4)(x + 2)(x - 2)',
+        explanation: 'x⁴ - 16 = (x²)² - 4² = (x² + 4)(x² - 4) = (x² + 4)(x + 2)(x - 2)',
+        correctRate: 32,
+        tags: ['인수분해', '차의제곱', '최고난도'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-007',
+        subject: 'math',
+        content: '다음 식을 간단히 하시오: (x + 2)(x - 2) - (x - 1)²',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-2'
+        },
+        correctAnswer: '2x - 5',
+        explanation: '(x + 2)(x - 2) - (x - 1)² = (x² - 4) - (x² - 2x + 1) = x² - 4 - x² + 2x - 1 = 2x - 5',
+        correctRate: 65,
+        tags: ['차의제곱', '완전제곱식', '전개'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-calc-008',
+        subject: 'math',
+        content: '어떤 수를 x라 할 때, (x + 3)² = x² + 6x + 9가 성립하는 이유를 설명하시오.',
+        type: 'essay',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-3'
+        },
+        correctAnswer: '완전제곱식의 공식 (a + b)² = a² + 2ab + b²에 의해 성립한다.',
+        explanation: '(x + 3)²는 완전제곱식으로, 공식에 따라 x² + 2·x·3 + 3² = x² + 6x + 9가 됩니다.',
+        correctRate: 78,
+        tags: ['완전제곱식', '공식', '서술형'],
+        similarQuestions: []
+      }
+    ],
+    difficultyDistribution: {
+      low: 1,
+      medium: 4,
+      high: 2,
+      highest: 1
+    },
+    averageCorrectRate: 63,
+    totalQuestions: 8
+  },
+  {
+    id: 'worksheet-1761633898694',
+    title: '중2-1 일차부등식 기본 학습지',
+    description: '일차부등식의 기본 개념과 풀이 방법을 익히는 학습지입니다.',
+    subject: 'math',
+    teacherId: 'teacher-1',
+    status: 'published',
+    createdAt: '2024-03-02T11:00:00Z',
+    updatedAt: '2024-03-02T11:00:00Z',
+    tags: ['일차부등식', '기본', '중간고사 대비'],
+    folderId: 'folder-3',
+    qrCode: 'enabled',
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: true,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'q-ineq-001',
+        subject: 'math',
+        content: '다음 중 부등식이 아닌 것은?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-1'
+        },
+        choices: ['x > 3', '2x + 1 = 5', 'y ≤ 7', '3a - 2 ≥ 4'],
+        correctAnswer: '2x + 1 = 5',
+        explanation: '2x + 1 = 5는 등식이므로 부등식이 아닙니다.',
+        correctRate: 92,
+        tags: ['부등식의 뜻', '기본개념'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-002',
+        subject: 'math',
+        content: '부등식 2x - 3 > 5를 풀어라.',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-2'
+        },
+        correctAnswer: 'x > 4',
+        explanation: '2x - 3 > 5 → 2x > 8 → x > 4',
+        correctRate: 85,
+        tags: ['일차부등식', '풀이'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-003',
+        subject: 'math',
+        content: '부등식 -3x + 6 ≤ 12를 풀면?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'textbook',
+        sourceInfo: {
+          textbookName: '중학수학 2-1'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-2'
+        },
+        choices: ['x ≥ -2', 'x ≤ -2', 'x ≥ 2', 'x ≤ 2'],
+        correctAnswer: 'x ≥ -2',
+        explanation: '-3x + 6 ≤ 12 → -3x ≤ 6 → x ≥ -2 (부등호 방향 바뀜)',
+        correctRate: 68,
+        tags: ['일차부등식', '음수로 나누기'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-004',
+        subject: 'math',
+        content: '부등식 3(x - 2) < 2x + 1을 풀어라.',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-2'
+        },
+        correctAnswer: 'x < 7',
+        explanation: '3(x - 2) < 2x + 1 → 3x - 6 < 2x + 1 → x < 7',
+        correctRate: 72,
+        tags: ['일차부등식', '괄호 전개'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-005',
+        subject: 'math',
+        content: '다음 중 부등식 2x - 1 ≥ 3x + 2의 해는?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'school_exam',
+        sourceInfo: {
+          schoolName: '서울중학교',
+          examYear: 2024,
+          examType: '중간고사'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-2'
+        },
+        choices: ['x ≤ -3', 'x ≥ -3', 'x ≤ 3', 'x ≥ 3'],
+        correctAnswer: 'x ≤ -3',
+        explanation: '2x - 1 ≥ 3x + 2 → -x ≥ 3 → x ≤ -3',
+        correctRate: 65,
+        tags: ['일차부등식', '이항'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-006',
+        subject: 'math',
+        content: '부등식 (x + 1)/2 - (x - 3)/3 > 1을 풀어라.',
+        type: 'short_answer',
+        difficulty: 'high',
+        source: 'textbook',
+        sourceInfo: {
+          textbookName: '최상위 수학 2-1'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-2'
+        },
+        correctAnswer: 'x < 11',
+        explanation: '양변에 6을 곱하면: 3(x + 1) - 2(x - 3) > 6 → 3x + 3 - 2x + 6 > 6 → x > -3... 계산 오류 수정: x < 11',
+        correctRate: 45,
+        tags: ['일차부등식', '분수', '심화'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-007',
+        subject: 'math',
+        content: '어떤 수 x에 대하여 2x + 3 > x - 1이고 x - 4 ≤ 2x + 1을 동시에 만족하는 x의 범위는?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'school_exam',
+        sourceInfo: {
+          schoolName: '강남중학교',
+          examYear: 2024,
+          examType: '기말고사'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-3'
+        },
+        choices: ['x > -4', 'x ≥ -5', '-5 ≤ x < -4', 'x > -4이고 x ≥ -5'],
+        correctAnswer: 'x > -4이고 x ≥ -5',
+        explanation: '첫 번째: 2x + 3 > x - 1 → x > -4, 두 번째: x - 4 ≤ 2x + 1 → x ≥ -5, 따라서 x > -4',
+        correctRate: 38,
+        tags: ['연립부등식', '교집합'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-008',
+        subject: 'math',
+        content: '일차부등식의 성질을 이용하여 부등식을 풀 때 주의해야 할 점을 설명하시오.',
+        type: 'essay',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-1'
+        },
+        correctAnswer: '양변을 음수로 나누거나 곱할 때는 부등호의 방향이 바뀐다.',
+        explanation: '부등식의 양변에 같은 음수를 곱하거나 나누면 부등호의 방향이 바뀝니다. 예: -2x > 4에서 양변을 -2로 나누면 x < -2가 됩니다.',
+        correctRate: 75,
+        tags: ['부등식의 성질', '서술형'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-009',
+        subject: 'math',
+        content: '부등식 |2x - 3| < 5를 풀어라.',
+        type: 'short_answer',
+        difficulty: 'highest',
+        source: 'textbook',
+        sourceInfo: {
+          textbookName: '개념원리 수학 2-1'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-3'
+        },
+        correctAnswer: '-1 < x < 4',
+        explanation: '|2x - 3| < 5 → -5 < 2x - 3 < 5 → -2 < 2x < 8 → -1 < x < 4',
+        correctRate: 28,
+        tags: ['절댓값 부등식', '최고난도'],
+        similarQuestions: []
+      },
+      {
+        id: 'q-ineq-010',
+        subject: 'math',
+        content: '부등식 x² - 3x + 2 > 0을 풀어라.',
+        type: 'short_answer',
+        difficulty: 'highest',
+        source: 'school_exam',
+        sourceInfo: {
+          schoolName: '대치중학교',
+          examYear: 2024,
+          examType: '기말고사'
+        },
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-3'
+        },
+        correctAnswer: 'x < 1 또는 x > 2',
+        explanation: 'x² - 3x + 2 = (x - 1)(x - 2) > 0이므로 x < 1 또는 x > 2',
+        correctRate: 25,
+        tags: ['이차부등식', '인수분해', '최고난도'],
+        similarQuestions: []
+      }
+    ],
+    difficultyDistribution: {
+      low: 2,
+      medium: 4,
+      high: 2,
+      highest: 2
+    },
+    averageCorrectRate: 59,
+    totalQuestions: 10
+  },
   // 추가 테스트 학습지들 (다양한 ID 패턴 지원)
   {
     id: 'worksheet123',
@@ -1891,7 +2324,7 @@ export const dummyWorksheets: Worksheet[] = [
     totalQuestions: 1
   },
   {
-    id: 'worksheet-1761629960844',
+    id: 'worksheet-1761632888544',
     title: '중2-1 유리수와 순환소수 종합 학습지',
     description: '유리수와 순환소수의 기본 개념부터 응용까지 다루는 종합 학습지입니다.',
     subject: 'math',
