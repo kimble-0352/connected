@@ -3767,7 +3767,7 @@ export const dummyContentItems: ContentItem[] = [
     fileName: 'seoul_high_2024_mid_math.pdf',
     fileSize: 2048576, // 2MB
     filePath: '/uploads/content/seoul_high_2024_mid_math.pdf',
-    thumbnailPath: '/uploads/thumbnails/seoul_high_2024_mid_math.jpg',
+    thumbnailPath: '/test-sample.png',
     status: 'completed',
     createdAt: '2024-03-15T09:00:00Z',
     updatedAt: '2024-03-15T10:30:00Z',

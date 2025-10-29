@@ -28,6 +28,7 @@ const ContentDetailPage = ({ params }: ContentDetailPageProps) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [isSavingShare, setIsSavingShare] = useState(false);
+  const [isFullViewOpen, setIsFullViewOpen] = useState(false);
   
   const { id } = use(params);
   const contentItem = getContentItemById(id);
@@ -340,7 +341,11 @@ const ContentDetailPage = ({ params }: ContentDetailPageProps) => {
                   )}
                 </div>
                 <div className="mt-4 flex justify-center">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setIsFullViewOpen(true)}
+                  >
                     <Eye className="h-4 w-4 mr-2" />
                     전체 보기
                   </Button>
@@ -447,6 +452,60 @@ const ContentDetailPage = ({ params }: ContentDetailPageProps) => {
             onSave={handleSaveShareSettings}
             isSaving={isSavingShare}
           />
+        </DialogContent>
+      </Dialog>
+
+      {/* 파일 전체보기 다이얼로그 */}
+      <Dialog open={isFullViewOpen} onOpenChange={setIsFullViewOpen}>
+        <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {getFileIcon(contentItem.fileType)}
+              {contentItem.fileName}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-auto">
+            {contentItem.thumbnailPath ? (
+              <div className="flex justify-center items-center min-h-[60vh]">
+                <img 
+                  src={contentItem.thumbnailPath} 
+                  alt={contentItem.fileName}
+                  className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                  style={{ maxHeight: '70vh' }}
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+                {getFileIcon(contentItem.fileType)}
+                <h3 className="text-lg font-semibold mt-4 mb-2">파일 미리보기를 사용할 수 없습니다</h3>
+                <p className="text-muted-foreground mb-4">
+                  {contentItem.fileType === 'pdf' 
+                    ? 'PDF 파일의 미리보기가 준비되지 않았습니다.' 
+                    : '이 파일 형식은 미리보기를 지원하지 않습니다.'
+                  }
+                </p>
+                <Button onClick={handleDownload} variant="outline">
+                  <Download className="h-4 w-4 mr-2" />
+                  파일 다운로드
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className="flex justify-between items-center pt-4 border-t">
+            <div className="text-sm text-muted-foreground">
+              파일 크기: {formatFileSize(contentItem.fileSize)} | 
+              업로드: {formatDate(contentItem.createdAt)}
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={handleDownload} variant="outline" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                다운로드
+              </Button>
+              <Button onClick={() => setIsFullViewOpen(false)} variant="outline" size="sm">
+                닫기
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
       </div>

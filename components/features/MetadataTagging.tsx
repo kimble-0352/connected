@@ -489,13 +489,26 @@ export const MetadataTagging: React.FC<MetadataTaggingProps> = ({
               <Input
                 id="questionCount"
                 type="number"
-                value={metadata.questionCount}
-                onChange={(e) => setMetadata(prev => ({ 
-                  ...prev, 
-                  questionCount: parseInt(e.target.value) || 0 
-                }))}
-                placeholder="0"
+                value={metadata.questionCount || ''}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // 빈 문자열이거나 숫자인 경우만 허용
+                  if (value === '' || /^\d+$/.test(value)) {
+                    setMetadata(prev => ({ 
+                      ...prev, 
+                      questionCount: value === '' ? 0 : parseInt(value)
+                    }));
+                  }
+                }}
+                onKeyPress={(e) => {
+                  // 숫자와 백스페이스, 삭제키만 허용
+                  if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab') {
+                    e.preventDefault();
+                  }
+                }}
+                placeholder="예: 20"
                 min="0"
+                max="999"
               />
             </div>
           </div>
