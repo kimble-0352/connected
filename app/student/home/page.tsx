@@ -23,8 +23,10 @@ import {
   useCurrentUser, 
   useAssignments,
   useStudentStats,
-  useLearningResults
+  useLearningResults,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { AdvancedStudentDashboard } from '@/components/features/AdvancedStudentDashboard';
 import { getStudentStats, getTotalStudentStats, getSubjectStats } from '@/app/lib/data/dummy-data';
 import Link from 'next/link';
@@ -34,6 +36,7 @@ const StudentHome = () => {
   const [assignmentFilter, setAssignmentFilter] = useState<'all' | 'in_progress' | 'completed' | 'overdue'>('all');
   
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const assignments = useAssignments(undefined, currentUser?.id);
   const studentStats = useStudentStats(currentUser?.id || '');
   const learningResults = useLearningResults(currentUser?.id);
@@ -47,6 +50,12 @@ const StudentHome = () => {
   const englishStats = currentUser ? getSubjectStats(currentUser.id, 'english') : null;
   const koreanStats = currentUser ? getSubjectStats(currentUser.id, 'korean') : null;
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">

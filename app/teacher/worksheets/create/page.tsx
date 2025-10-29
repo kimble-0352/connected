@@ -19,11 +19,15 @@ import {
   Users,
   ChevronRight,
   Target,
-  Zap
+  Zap,
+  Search,
+  X
 } from 'lucide-react';
 import { 
-  useCurrentUser
+  useCurrentUser,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { 
   Subject,
   QuestionType,
@@ -36,7 +40,7 @@ import {
 import Link from 'next/link';
 
 // 탭 타입 정의
-type ContentTab = 'unit' | 'exam';
+type ContentTab = 'unit' | 'school_exam';
 
 // 학년-학기 데이터
 const gradeTerms = [
@@ -48,10 +52,102 @@ const gradeTerms = [
   { id: '3-2', label: '중3-2' },
 ];
 
+// 지역/학교 데이터 구조
+interface School {
+  id: string;
+  name: string;
+  availableYears: number[];
+  examTypes: ('midterm' | 'final')[];
+}
+
+interface District {
+  id: string;
+  name: string;
+  schools: School[];
+}
+
+interface Region {
+  id: string;
+  name: string;
+  districts: District[];
+}
+
+// 지역/학교 더미 데이터
+const regionData: Region[] = [
+  {
+    id: 'seoul',
+    name: '서울',
+    districts: [
+      {
+        id: 'gangnam',
+        name: '강남구',
+        schools: [
+          { id: 'gangnam-middle-1', name: '개원중학교', availableYears: [2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'gangnam-middle-2', name: '개포중학교', availableYears: [2021, 2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'gangnam-middle-3', name: '구룡중학교', availableYears: [2023, 2024], examTypes: ['midterm', 'final'] },
+        ]
+      },
+      {
+        id: 'gangdong',
+        name: '강동구',
+        schools: [
+          { id: 'gangdong-middle-1', name: '강동중학교', availableYears: [2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'gangdong-middle-2', name: '강일중학교', availableYears: [2023, 2024], examTypes: ['midterm', 'final'] },
+        ]
+      },
+      {
+        id: 'gangbuk',
+        name: '강북구',
+        schools: [
+          { id: 'gangbuk-middle-1', name: '강북중학교', availableYears: [2021, 2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'gangbuk-middle-2', name: '강릉중학교', availableYears: [2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'gyeonggi',
+    name: '경기',
+    districts: [
+      {
+        id: 'suwon',
+        name: '수원시',
+        schools: [
+          { id: 'suwon-middle-1', name: '수원중학교', availableYears: [2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'suwon-middle-2', name: '수성중학교', availableYears: [2021, 2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+        ]
+      },
+      {
+        id: 'seongnam',
+        name: '성남시',
+        schools: [
+          { id: 'seongnam-middle-1', name: '성남중학교', availableYears: [2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'seongnam-middle-2', name: '성복중학교', availableYears: [2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'busan',
+    name: '부산',
+    districts: [
+      {
+        id: 'haeundae',
+        name: '해운대구',
+        schools: [
+          { id: 'haeundae-middle-1', name: '해운대중학교', availableYears: [2022, 2023, 2024], examTypes: ['midterm', 'final'] },
+          { id: 'haeundae-middle-2', name: '해강중학교', availableYears: [2023, 2024], examTypes: ['midterm', 'final'] },
+        ]
+      }
+    ]
+  }
+];
+
 
 const CreateWorksheetPage = () => {
   const router = useRouter();
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   
   // 상태 관리
   const [activeTab, setActiveTab] = useState<ContentTab>('unit');
@@ -60,6 +156,16 @@ const CreateWorksheetPage = () => {
   const [selectedUnits, setSelectedUnits] = useState<Set<string>>(new Set());
   const [questionCount, setQuestionCount] = useState(50);
   const [questionTypes, setQuestionTypes] = useState<QuestionType[]>(['multiple_choice']);
+  
+  // 학교별 기출 관련 상태
+  const [schoolExamGradeTerm, setSchoolExamGradeTerm] = useState('1-1');
+  const [selectedSchools, setSelectedSchools] = useState<Set<string>>(new Set());
+  const [selectedRegion, setSelectedRegion] = useState<string>('');
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [schoolSearchQuery, setSchoolSearchQuery] = useState('');
+  const [selectedExamYears, setSelectedExamYears] = useState<Set<number>>(new Set());
+  const [selectedExamTypes, setSelectedExamTypes] = useState<Set<'midterm' | 'final'>>(new Set());
+  const [schoolExamUnits, setSchoolExamUnits] = useState<Set<string>>(new Set());
   
   // 난이도 설정
   const [difficultyMode, setDifficultyMode] = useState<'single' | 'mixed'>('single');
@@ -107,7 +213,7 @@ const CreateWorksheetPage = () => {
         return [
           {
             id: 'exam-math-1',
-            label: '수능 기출',
+            label: '수능',
             type: 'folder',
             children: [
               {
@@ -153,7 +259,7 @@ const CreateWorksheetPage = () => {
         return [
           {
             id: 'exam-eng-1',
-            label: '수능 기출',
+            label: '수능',
             type: 'folder',
             children: [
               {
@@ -203,7 +309,7 @@ const CreateWorksheetPage = () => {
         return [
           {
             id: 'exam-kor-1',
-            label: '수능 기출',
+            label: '수능',
             type: 'folder',
             children: [
               {
@@ -299,6 +405,12 @@ const CreateWorksheetPage = () => {
   const totalDifficultyRatio = Object.values(difficultyRatios).reduce((sum, value) => sum + value, 0);
 
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -381,12 +493,46 @@ const CreateWorksheetPage = () => {
               </CardContent>
             </Card>
 
-            {/* 탭 네비게이션 - 카드 스타일로 변경 */}
+            {/* 학년-학기 선택 - 2번으로 이동 */}
             <Card>
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
                     <span className="text-blue-600 text-sm font-bold">2</span>
+                  </div>
+                  학년·학기 선택
+                </CardTitle>
+                <CardDescription>
+                  {selectedSubject === 'math' && '수학'}
+                  {selectedSubject === 'english' && '영어'}
+                  {selectedSubject === 'korean' && '국어'} 학습지의 학년과 학기를 선택하세요
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {gradeTerms.map(term => (
+                    <button
+                      key={term.id}
+                      onClick={() => setSelectedGradeTerm(term.id)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        selectedGradeTerm === term.id
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {term.label}
+                    </button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 탭 네비게이션 - 카드 스타일로 변경, 3번으로 이동 */}
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-sm font-bold">3</span>
                   </div>
                   컨텐츠 유형 선택
                 </CardTitle>
@@ -407,14 +553,14 @@ const CreateWorksheetPage = () => {
                     단원·유형별
                   </button>
                   <button
-                    onClick={() => setActiveTab('exam')}
+                    onClick={() => setActiveTab('school_exam')}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      activeTab === 'exam'
+                      activeTab === 'school_exam'
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    기출
+                    학교 별 기출
                   </button>
                 </div>
               </CardContent>
@@ -423,40 +569,6 @@ const CreateWorksheetPage = () => {
             {/* 탭 컨텐츠 */}
             {activeTab === 'unit' && (
               <div className="space-y-6">
-                {/* 학년-학기 선택 */}
-                <Card>
-                  <CardHeader className="pb-4">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-blue-600 text-sm font-bold">3</span>
-                      </div>
-                      학년·학기 선택
-                    </CardTitle>
-                    <CardDescription>
-                      {selectedSubject === 'math' && '수학'}
-                      {selectedSubject === 'english' && '영어'}
-                      {selectedSubject === 'korean' && '국어'} 학습지의 학년과 학기를 선택하세요
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {gradeTerms.map(term => (
-                        <button
-                          key={term.id}
-                          onClick={() => setSelectedGradeTerm(term.id)}
-                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                            selectedGradeTerm === term.id
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {term.label}
-                        </button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
                 {/* 단원 선택 */}
                 <Card>
                   <CardHeader className="pb-4">
@@ -485,33 +597,323 @@ const CreateWorksheetPage = () => {
               </div>
             )}
 
-            {activeTab === 'exam' && (
+
+            {activeTab === 'school_exam' && (
               <div className="space-y-6">
-                {/* 기출문제 선택 */}
+                {/* 지역·학교 선택 */}
                 <Card>
                   <CardHeader className="pb-4">
                     <CardTitle className="flex items-center gap-2 text-lg">
                       <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-blue-600 text-sm font-bold">3</span>
+                        <span className="text-blue-600 text-sm font-bold">4</span>
                       </div>
-                      기출문제 선택
+                      지역·학교 선택
                     </CardTitle>
                     <CardDescription>
-                      {selectedSubject === 'math' && '수학'}
-                      {selectedSubject === 'english' && '영어'}
-                      {selectedSubject === 'korean' && '국어'} 수능 및 모의고사 기출문제를 선택하세요
+                      최대 30개의 학교를 선택할 수 있어요
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="border rounded-lg p-4 max-h-96 overflow-y-auto">
-                      <TreeView
-                        data={examTreeData}
-                        selectedIds={selectedUnits}
-                        onSelectionChange={setSelectedUnits}
+                  <CardContent className="space-y-4">
+                    {/* 검색창 */}
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        placeholder="학교명으로 검색"
+                        value={schoolSearchQuery}
+                        onChange={(e) => setSchoolSearchQuery(e.target.value)}
+                        className="pl-10"
                       />
                     </div>
+
+                    {/* 지역 선택 */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">지역</Label>
+                      <div className="flex flex-wrap gap-2">
+                        {regionData.map(region => (
+                          <button
+                            key={region.id}
+                            onClick={() => {
+                              setSelectedRegion(region.id);
+                              setSelectedDistrict('');
+                            }}
+                            className={`px-3 py-2 text-sm rounded-lg transition-colors ${
+                              selectedRegion === region.id
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            {region.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* 구/군 선택 */}
+                    {selectedRegion && (
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">시/구/군</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {regionData
+                            .find(r => r.id === selectedRegion)
+                            ?.districts.map(district => (
+                              <button
+                                key={district.id}
+                                onClick={() => setSelectedDistrict(district.id)}
+                                className={`px-3 py-2 text-sm rounded-lg transition-colors ${
+                                  selectedDistrict === district.id
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
+                              >
+                                {district.name}
+                              </button>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 학교 선택 */}
+                    {selectedDistrict && (
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">학교</Label>
+                        <div className="border rounded-lg p-4 max-h-48 overflow-y-auto space-y-2">
+                          {regionData
+                            .find(r => r.id === selectedRegion)
+                            ?.districts.find(d => d.id === selectedDistrict)
+                            ?.schools.filter(school => 
+                              schoolSearchQuery === '' || 
+                              school.name.toLowerCase().includes(schoolSearchQuery.toLowerCase())
+                            )
+                            .map(school => (
+                              <label key={school.id} className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-50 rounded">
+                                <Checkbox
+                                  checked={selectedSchools.has(school.id)}
+                                  onCheckedChange={(checked) => {
+                                    const newSelected = new Set(selectedSchools);
+                                    if (checked && selectedSchools.size < 30) {
+                                      newSelected.add(school.id);
+                                    } else if (!checked) {
+                                      newSelected.delete(school.id);
+                                    }
+                                    setSelectedSchools(newSelected);
+                                  }}
+                                  disabled={!selectedSchools.has(school.id) && selectedSchools.size >= 30}
+                                />
+                                <span className="text-sm">{school.name}</span>
+                                <div className="ml-auto flex gap-1">
+                                  {school.availableYears.map(year => (
+                                    <Badge key={year} variant="secondary" className="text-xs">
+                                      {year}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </label>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 검색 결과 (전체 검색) */}
+                    {schoolSearchQuery && (
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">검색 결과</Label>
+                        <div className="border rounded-lg p-4 max-h-48 overflow-y-auto space-y-2">
+                          {regionData.flatMap(region =>
+                            region.districts.flatMap(district =>
+                              district.schools.filter(school =>
+                                school.name.toLowerCase().includes(schoolSearchQuery.toLowerCase())
+                              ).map(school => ({ ...school, regionName: region.name, districtName: district.name }))
+                            )
+                          ).map(school => (
+                            <label key={school.id} className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-50 rounded">
+                              <Checkbox
+                                checked={selectedSchools.has(school.id)}
+                                onCheckedChange={(checked) => {
+                                  const newSelected = new Set(selectedSchools);
+                                  if (checked && selectedSchools.size < 30) {
+                                    newSelected.add(school.id);
+                                  } else if (!checked) {
+                                    newSelected.delete(school.id);
+                                  }
+                                  setSelectedSchools(newSelected);
+                                }}
+                                disabled={!selectedSchools.has(school.id) && selectedSchools.size >= 30}
+                              />
+                              <div className="flex-1">
+                                <span className="text-sm font-medium">{school.name}</span>
+                                <span className="text-xs text-gray-500 ml-2">
+                                  {school.regionName} {school.districtName}
+                                </span>
+                              </div>
+                              <div className="flex gap-1">
+                                {school.availableYears.map(year => (
+                                  <Badge key={year} variant="secondary" className="text-xs">
+                                    {year}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 선택된 학교 목록 */}
+                    {selectedSchools.size > 0 && (
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">
+                          선택된 학교 ({selectedSchools.size}/30)
+                        </Label>
+                        <div className="flex flex-wrap gap-2">
+                          {Array.from(selectedSchools).map(schoolId => {
+                            const school = regionData.flatMap(r => 
+                              r.districts.flatMap(d => d.schools)
+                            ).find(s => s.id === schoolId);
+                            return school ? (
+                              <Badge key={schoolId} variant="default" className="flex items-center gap-1">
+                                {school.name}
+                                <button
+                                  onClick={() => {
+                                    const newSelected = new Set(selectedSchools);
+                                    newSelected.delete(schoolId);
+                                    setSelectedSchools(newSelected);
+                                  }}
+                                  className="ml-1 hover:bg-blue-700 rounded-full p-0.5"
+                                >
+                                  <X className="h-3 w-3" />
+                                </button>
+                              </Badge>
+                            ) : null;
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
+
+                {/* 기출 연도 및 시험 유형 선택 */}
+                {selectedSchools.size > 0 && (
+                  <Card>
+                    <CardHeader className="pb-4">
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm font-bold">5</span>
+                        </div>
+                        기출 연도 및 시험 유형 선택
+                      </CardTitle>
+                      <CardDescription>
+                        선택된 학교들의 기출문제 연도와 시험 유형을 선택하세요
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* 사용 가능한 연도 표시 */}
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">기출 연도</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {Array.from(new Set(
+                            Array.from(selectedSchools).flatMap(schoolId => {
+                              const school = regionData.flatMap(r => 
+                                r.districts.flatMap(d => d.schools)
+                              ).find(s => s.id === schoolId);
+                              return school?.availableYears || [];
+                            })
+                          )).sort((a, b) => b - a).map(year => (
+                            <button
+                              key={year}
+                              onClick={() => {
+                                const newSelected = new Set(selectedExamYears);
+                                if (newSelected.has(year)) {
+                                  newSelected.delete(year);
+                                } else {
+                                  newSelected.add(year);
+                                }
+                                setSelectedExamYears(newSelected);
+                              }}
+                              className={`px-3 py-2 text-sm rounded-lg transition-colors ${
+                                selectedExamYears.has(year)
+                                  ? 'bg-blue-600 text-white'
+                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                              }`}
+                            >
+                              {year}년
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* 시험 유형 선택 */}
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">시험 유형</Label>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              const newSelected = new Set(selectedExamTypes);
+                              if (newSelected.has('midterm')) {
+                                newSelected.delete('midterm');
+                              } else {
+                                newSelected.add('midterm');
+                              }
+                              setSelectedExamTypes(newSelected);
+                            }}
+                            className={`px-4 py-2 text-sm rounded-lg transition-colors ${
+                              selectedExamTypes.has('midterm')
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            중간고사
+                          </button>
+                          <button
+                            onClick={() => {
+                              const newSelected = new Set(selectedExamTypes);
+                              if (newSelected.has('final')) {
+                                newSelected.delete('final');
+                              } else {
+                                newSelected.add('final');
+                              }
+                              setSelectedExamTypes(newSelected);
+                            }}
+                            className={`px-4 py-2 text-sm rounded-lg transition-colors ${
+                              selectedExamTypes.has('final')
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            기말고사
+                          </button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* 단원 선택 */}
+                {selectedSchools.size > 0 && selectedExamYears.size > 0 && selectedExamTypes.size > 0 && (
+                  <Card>
+                    <CardHeader className="pb-4">
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-blue-600 text-sm font-bold">6</span>
+                        </div>
+                        단원 선택
+                      </CardTitle>
+                      <CardDescription>
+                        {selectedSubject === 'math' && '수학'}
+                        {selectedSubject === 'english' && '영어'}
+                        {selectedSubject === 'korean' && '국어'} {schoolExamGradeTerm} 학습지에 포함할 단원을 선택하세요
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="border rounded-lg p-4 max-h-96 overflow-y-auto">
+                        <TreeView
+                          data={unitTreeData}
+                          selectedIds={schoolExamUnits}
+                          onSelectionChange={setSchoolExamUnits}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             )}
           </div>
@@ -727,15 +1129,40 @@ const CreateWorksheetPage = () => {
                     <p className="text-lg font-bold text-gray-900">
                       학습지 문제 수 {questionCount}개
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      선택된 유형 {selectedUnits.size}개
-                    </p>
-                    {difficultyMode === 'single' && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        난이도: {singleDifficulty === 'highest' ? '최상' : 
-                                singleDifficulty === 'high' ? '상' :
-                                singleDifficulty === 'medium' ? '중' : '하'}
-                      </p>
+                    {activeTab === 'school_exam' ? (
+                      <>
+                        <p className="text-sm text-gray-500 mt-1">
+                          선택된 학교 {selectedSchools.size}개
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          선택된 단원 {schoolExamUnits.size}개
+                        </p>
+                        {selectedExamYears.size > 0 && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            기출연도: {Array.from(selectedExamYears).sort((a, b) => b - a).join(', ')}년
+                          </p>
+                        )}
+                        {selectedExamTypes.size > 0 && (
+                          <p className="text-xs text-gray-500">
+                            시험유형: {Array.from(selectedExamTypes).map(type => 
+                              type === 'midterm' ? '중간고사' : '기말고사'
+                            ).join(', ')}
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm text-gray-500 mt-1">
+                          선택된 유형 {selectedUnits.size}개
+                        </p>
+                        {difficultyMode === 'single' && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            난이도: {singleDifficulty === 'highest' ? '최상' : 
+                                    singleDifficulty === 'high' ? '상' :
+                                    singleDifficulty === 'medium' ? '중' : '하'}
+                          </p>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -744,53 +1171,104 @@ const CreateWorksheetPage = () => {
                 <Button 
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                   size="lg"
-                  disabled={selectedUnits.size === 0}
+                  disabled={
+                    activeTab === 'school_exam' 
+                      ? (selectedSchools.size === 0 || selectedExamYears.size === 0 || selectedExamTypes.size === 0 || schoolExamUnits.size === 0)
+                      : selectedUnits.size === 0
+                  }
                   onClick={() => {
-                    // 1단계 데이터를 세션 스토리지에 저장
-                    console.log('Step1 - 선택된 단원들:', Array.from(selectedUnits));
-                    console.log('Step1 - 선택된 과목:', selectedSubject);
-                    console.log('Step1 - 활성 탭:', activeTab);
-                    
-                    const step1Data = {
-                      subject: selectedSubject,
-                      questionCount: questionCount,
-                      difficulty: difficultyMode === 'single' 
-                        ? { type: 'single' as const, single: singleDifficulty }
-                        : { type: 'mixed' as const, mixed: difficultyRatios },
-                      questionTypes: questionTypes,
-                      curriculum: Array.from(selectedUnits).map(unitId => {
-                        // unitId를 기반으로 올바른 커리큘럼 구조 생성
-                        // unitId 형태에 따라 적절한 매핑
-                        console.log('Step1 - unitId:', unitId);
-                        
-                        // 새로운 구조에 맞게 매핑
-                        // 예: "chapter-2-1" -> {chapterId: "chapter-2-1", sectionId: "section-2-1-1", lessonId: "lesson-2-1-1-1"}
-                        if (unitId.includes('chapter-')) {
+                    if (activeTab === 'school_exam') {
+                      // 학교별 기출 데이터 저장
+                      console.log('Step1 - 선택된 학교들:', Array.from(selectedSchools));
+                      console.log('Step1 - 선택된 기출연도:', Array.from(selectedExamYears));
+                      console.log('Step1 - 선택된 시험유형:', Array.from(selectedExamTypes));
+                      console.log('Step1 - 선택된 단원들:', Array.from(schoolExamUnits));
+                      
+                      const step1Data = {
+                        subject: selectedSubject,
+                        gradeTerm: schoolExamGradeTerm,
+                        questionCount: questionCount,
+                        difficulty: difficultyMode === 'single' 
+                          ? { type: 'single' as const, single: singleDifficulty }
+                          : { type: 'mixed' as const, mixed: difficultyRatios },
+                        questionTypes: questionTypes,
+                        curriculum: Array.from(schoolExamUnits).map(unitId => {
+                          console.log('Step1 - unitId:', unitId);
+                          
+                          if (unitId.includes('chapter-')) {
+                            return {
+                              chapterId: unitId,
+                              sectionId: unitId.replace('chapter-', 'section-') + '-1',
+                              lessonId: unitId.replace('chapter-', 'lesson-') + '-1-1'
+                            };
+                          }
+                          
                           return {
                             chapterId: unitId,
-                            sectionId: unitId.replace('chapter-', 'section-') + '-1',
-                            lessonId: unitId.replace('chapter-', 'lesson-') + '-1-1'
+                            sectionId: `section-${unitId}`,
+                            lessonId: `lesson-${unitId}`
                           };
+                        }),
+                        sources: ['school_specific_exam'],
+                        schoolExamData: {
+                          schools: Array.from(selectedSchools),
+                          examYears: Array.from(selectedExamYears),
+                          examTypes: Array.from(selectedExamTypes)
+                        },
+                        options: {
+                          evenDistribution: equalDistribution,
+                          limitQuestionTypes: limitQuestionTypes,
+                          maxQuestionsPerType: maxQuestionsPerType,
+                          prioritizeHighDifficulty: false
                         }
-                        
-                        // 기본 매핑 (기존 방식)
-                        return {
-                          chapterId: unitId,
-                          sectionId: `section-${unitId}`,
-                          lessonId: `lesson-${unitId}`
-                        };
-                      }),
-                      sources: activeTab === 'unit' ? ['internal'] : ['school_exam'],
-                      options: {
-                        evenDistribution: equalDistribution,
-                        limitQuestionTypes: limitQuestionTypes,
-                        maxQuestionsPerType: maxQuestionsPerType,
-                        prioritizeHighDifficulty: false
-                      }
-                    };
+                      };
+                      
+                      console.log('Step1 - 저장할 학교별 기출 데이터:', step1Data);
+                      sessionStorage.setItem('worksheetCreationStep1', JSON.stringify(step1Data));
+                    } else {
+                      // 기존 단원별/기출문제 데이터 저장
+                      console.log('Step1 - 선택된 단원들:', Array.from(selectedUnits));
+                      console.log('Step1 - 선택된 과목:', selectedSubject);
+                      console.log('Step1 - 활성 탭:', activeTab);
+                      
+                      const step1Data = {
+                        subject: selectedSubject,
+                        gradeTerm: selectedGradeTerm,
+                        questionCount: questionCount,
+                        difficulty: difficultyMode === 'single' 
+                          ? { type: 'single' as const, single: singleDifficulty }
+                          : { type: 'mixed' as const, mixed: difficultyRatios },
+                        questionTypes: questionTypes,
+                        curriculum: Array.from(selectedUnits).map(unitId => {
+                          console.log('Step1 - unitId:', unitId);
+                          
+                          if (unitId.includes('chapter-')) {
+                            return {
+                              chapterId: unitId,
+                              sectionId: unitId.replace('chapter-', 'section-') + '-1',
+                              lessonId: unitId.replace('chapter-', 'lesson-') + '-1-1'
+                            };
+                          }
+                          
+                          return {
+                            chapterId: unitId,
+                            sectionId: `section-${unitId}`,
+                            lessonId: `lesson-${unitId}`
+                          };
+                        }),
+                        sources: activeTab === 'unit' ? ['internal'] : ['school_specific_exam'],
+                        options: {
+                          evenDistribution: equalDistribution,
+                          limitQuestionTypes: limitQuestionTypes,
+                          maxQuestionsPerType: maxQuestionsPerType,
+                          prioritizeHighDifficulty: false
+                        }
+                      };
+                      
+                      console.log('Step1 - 저장할 데이터:', step1Data);
+                      sessionStorage.setItem('worksheetCreationStep1', JSON.stringify(step1Data));
+                    }
                     
-                    console.log('Step1 - 저장할 데이터:', step1Data);
-                    sessionStorage.setItem('worksheetCreationStep1', JSON.stringify(step1Data));
                     console.log('Step1 - 세션스토리지에 저장 완료');
                     router.push('/teacher/worksheets/create/step2');
                   }}

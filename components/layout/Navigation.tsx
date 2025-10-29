@@ -14,7 +14,8 @@ import {
   Home,
   FileText,
   TrendingUp,
-  LogOut
+  LogOut,
+  Database
 } from 'lucide-react';
 import { useCurrentUser, useAppContext } from '@/app/lib/contexts/AppContext';
 
@@ -34,9 +35,9 @@ const teacherNavItems = [
     icon: BookOpen
   },
   {
-    title: '과제 관리',
-    href: '/teacher/assignments',
-    icon: ClipboardList
+    title: '콘텐츠 관리',
+    href: '/teacher/content',
+    icon: Database
   },
   {
     title: '학생 관리',

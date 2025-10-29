@@ -26,13 +26,16 @@ import {
 import { 
   useCurrentUser, 
   useAssignments,
-  useWorksheets
+  useWorksheets,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { Assignment } from '@/app/types';
 import Link from 'next/link';
 
 const AssignmentsPage = () => {
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const assignments = useAssignments(currentUser?.id);
   const worksheets = useWorksheets(currentUser?.id);
   
@@ -41,6 +44,12 @@ const AssignmentsPage = () => {
   const [subjectFilter, setSubjectFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">

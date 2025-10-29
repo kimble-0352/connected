@@ -30,8 +30,10 @@ import {
   useCurrentUser, 
   useWorksheets,
   useAssignments,
-  useFolders
+  useFolders,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import Link from 'next/link';
 import { WorksheetPDFViewer, usePDFActions } from '@/components/ui/worksheet-pdf-viewer';
 import { WorksheetFolderChanger } from '@/components/ui/worksheet-folder-changer';
@@ -41,6 +43,7 @@ const WorksheetDetailPage = () => {
   const params = useParams();
   const worksheetId = params.id as string;
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const worksheets = useWorksheets(currentUser?.id);
   const assignments = useAssignments(currentUser?.id);
   const folders = useFolders(currentUser?.id);
@@ -51,6 +54,12 @@ const WorksheetDetailPage = () => {
   // PDF 관련 액션들
   const pdfActions = worksheet ? usePDFActions(worksheet) : null;
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -28,14 +28,17 @@ import {
   useAssignments,
   useWorksheets,
   useStudents,
-  useLearningResults
+  useLearningResults,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import Link from 'next/link';
 
 const AssignmentDetailPage = () => {
   const params = useParams();
   const assignmentId = params.id as string;
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const assignments = useAssignments(currentUser?.id);
   const worksheets = useWorksheets(currentUser?.id);
   const students = useStudents(currentUser?.id);
@@ -46,6 +49,12 @@ const AssignmentDetailPage = () => {
   const assignedStudents = assignment ? students.filter(s => assignment.studentIds.includes(s.id)) : [];
   const assignmentResults = learningResults.filter(r => r.assignmentId === assignmentId);
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -7,6 +7,8 @@ export interface User {
   centerName: string;
   contactInfo?: string;
   teacherId?: string; // 학생의 경우 담당 선생님 ID
+  assignedSubjects?: Subject[]; // 학생의 경우 배정된 과목들
+  grade?: string; // 학년 (예: '중1', '중2', '중3')
 }
 
 // 과목 관련 타입
@@ -68,6 +70,10 @@ export interface Question {
   tags: string[];
   similarQuestions: string[]; // 유사 문제 ID 목록
   isFavorite?: boolean; // 선생님별 즐겨찾기
+  // 초중고, 학년/학기 정보 추가
+  schoolLevel: '초등' | '중등' | '고등';
+  grade: string; // 예: '1학년', '2학년', '3학년'
+  semester: string; // 예: '1학기', '2학기'
 }
 
 // 학습지 관련 타입
@@ -91,6 +97,10 @@ export interface Worksheet {
   };
   averageCorrectRate: number;
   totalQuestions: number;
+  // 초중고, 학년/학기 정보 추가
+  schoolLevel: '초등' | '중등' | '고등';
+  grade: string; // 예: '1학년', '2학년', '3학년'
+  semester: string; // 예: '1학기', '2학기'
   // step3에서 설정한 추가 정보들
   worksheetSettings?: {
     grade?: string; // 학년 정보
@@ -367,4 +377,95 @@ export interface OMRSession {
   totalQuestions: number;
   timeLimit?: number;
   instructions?: string;
+}
+
+// 콘텐츠 관리 관련 타입
+export type ContentStatus = 'processing' | 'completed' | 'failed';
+export type SharingType = 'private' | 'public' | 'selective';
+export type ContentFileType = 'pdf' | 'image';
+
+export interface ContentItem {
+  id: string;
+  title: string;
+  description?: string;
+  teacherId: string;
+  teacherName: string;
+  fileType: ContentFileType;
+  fileName: string;
+  fileSize: number;
+  filePath: string;
+  thumbnailPath?: string;
+  status: ContentStatus;
+  createdAt: string;
+  updatedAt: string;
+  metadata: ContentMetadata;
+  sharingSettings: SharingSettings;
+  extractedQuestions: Question[];
+  ocrResult?: OCRResult;
+  tags: string[];
+}
+
+export interface ContentMetadata {
+  schoolName?: string;
+  region?: string;
+  subject: Subject;
+  grade: string;
+  semester?: string; // '1-1', '1-2', '2-1', '2-2' 등
+  examYear?: number;
+  examType?: string; // '중간고사', '기말고사', '모의고사' 등
+  difficulty?: Difficulty;
+  questionCount: number;
+  autoTagged: boolean; // 자동 태깅 여부
+}
+
+export interface OCRResult {
+  id: string;
+  contentId: string;
+  status: 'processing' | 'completed' | 'failed';
+  confidence: number; // 0-100, OCR 신뢰도
+  extractedText: string;
+  processedAt: string;
+  processingTime: number; // 처리 시간 (초)
+  detectedQuestions: DetectedQuestion[];
+  error?: string;
+}
+
+export interface DetectedQuestion {
+  id: string;
+  questionNumber: number;
+  content: string;
+  type: QuestionType;
+  choices?: string[];
+  boundingBox: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  confidence: number;
+}
+
+export interface SharingSettings {
+  type: SharingType;
+  isPublic: boolean;
+  allowedTeachers: string[]; // 특정 선생님들과 공유할 때 사용
+  permissions: {
+    canView: boolean;
+    canEdit: boolean;
+    canDownload: boolean;
+  };
+  sharedAt?: string;
+}
+
+export interface ContentFilter {
+  subject?: Subject;
+  status?: ContentStatus;
+  sharingType?: SharingType;
+  schoolName?: string;
+  region?: string;
+  grade?: string;
+  examYear?: number;
+  tags?: string[];
+  searchQuery?: string;
+  teacherId?: string;
 }

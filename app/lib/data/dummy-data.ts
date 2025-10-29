@@ -20,7 +20,15 @@ import {
   TextbookChapter,
   TextbookPage,
   QuestionGroup,
-  TextbookQuestion
+  TextbookQuestion,
+  ContentItem,
+  ContentMetadata,
+  OCRResult,
+  SharingSettings,
+  DetectedQuestion,
+  ContentStatus,
+  SharingType,
+  ContentFileType
 } from '@/app/types';
 
 // 시중교재 더미 데이터
@@ -344,7 +352,9 @@ export const dummyUsers: User[] = [
     memberNumber: 'S001',
     role: 'student',
     centerName: '하이캠퍼스 강남센터',
-    teacherId: 'teacher-1'
+    teacherId: 'teacher-1',
+    assignedSubjects: ['math', 'english'],
+    grade: '중2'
   },
   {
     id: 'student-2',
@@ -352,7 +362,9 @@ export const dummyUsers: User[] = [
     memberNumber: 'S002',
     role: 'student',
     centerName: '하이캠퍼스 강남센터',
-    teacherId: 'teacher-1'
+    teacherId: 'teacher-1',
+    assignedSubjects: ['math', 'korean'],
+    grade: '중2'
   },
   {
     id: 'student-3',
@@ -360,7 +372,9 @@ export const dummyUsers: User[] = [
     memberNumber: 'S003',
     role: 'student',
     centerName: '하이캠퍼스 강남센터',
-    teacherId: 'teacher-1'
+    teacherId: 'teacher-1',
+    assignedSubjects: ['math', 'english', 'korean'],
+    grade: '중3'
   },
   {
     id: 'student-4',
@@ -368,7 +382,9 @@ export const dummyUsers: User[] = [
     memberNumber: 'S004',
     role: 'student',
     centerName: '하이캠퍼스 강남센터',
-    teacherId: 'teacher-1'
+    teacherId: 'teacher-1',
+    assignedSubjects: ['english'],
+    grade: '중1'
   },
   {
     id: 'student-5',
@@ -376,7 +392,9 @@ export const dummyUsers: User[] = [
     memberNumber: 'S005',
     role: 'student',
     centerName: '하이캠퍼스 강남센터',
-    teacherId: 'teacher-1'
+    teacherId: 'teacher-1',
+    assignedSubjects: ['math'],
+    grade: '중1'
   }
 ];
 
@@ -1536,6 +1554,18 @@ const generateSystematicQuestions = (): Question[] => {
         const contentIndex = Math.floor(Math.random() * contents.length);
         const tagIndex = Math.floor(Math.random() * tags.length);
         
+        // 학년/학기 정보 매핑
+        const gradeMapping: { [key: string]: { schoolLevel: '초등' | '중등' | '고등', grade: string, semester: string } } = {
+          '1-1': { schoolLevel: '중등', grade: '중1', semester: '1' },
+          '1-2': { schoolLevel: '중등', grade: '중1', semester: '2' },
+          '2-1': { schoolLevel: '중등', grade: '중2', semester: '1' },
+          '2-2': { schoolLevel: '중등', grade: '중2', semester: '2' },
+          '3-1': { schoolLevel: '중등', grade: '중3', semester: '1' },
+          '3-2': { schoolLevel: '중등', grade: '중3', semester: '2' }
+        };
+        
+        const gradeInfo = gradeMapping[grade];
+        
         const question: Question = {
           id: `${subject}-${difficulty}-${String(i).padStart(3, '0')}`,
           subject,
@@ -1552,7 +1582,10 @@ const generateSystematicQuestions = (): Question[] => {
           explanation: `${subject} ${grade} ${difficulty} 문제 ${i}의 해설입니다.`,
           correctRate,
           tags: [...tags[tagIndex]],
-          similarQuestions: []
+          similarQuestions: [],
+          schoolLevel: gradeInfo.schoolLevel,
+          grade: gradeInfo.grade,
+          semester: gradeInfo.semester
         };
         
         if (question.type === 'multiple_choice') {
@@ -1605,7 +1638,10 @@ export const dummyQuestions: Question[] = [
     explanation: '0.25는 유한소수이므로 순환소수가 아닙니다.',
     correctRate: 75,
     tags: ['순환소수', '유한소수'],
-    similarQuestions: []
+    similarQuestions: [],
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1'
   },
   {
     id: 'sample-math-2',
@@ -1627,7 +1663,10 @@ export const dummyQuestions: Question[] = [
     explanation: '0.363636... = 36/99 = 4/11입니다.',
     correctRate: 45,
     tags: ['순환소수', '분수변환', '상위권'],
-    similarQuestions: []
+    similarQuestions: [],
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1'
   },
   {
     id: 'sample-english-1',
@@ -1716,6 +1755,9 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['테스트', '기본'],
     folderId: 'folder-1',
     qrCode: 'enabled',
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -1742,7 +1784,10 @@ export const dummyWorksheets: Worksheet[] = [
         explanation: '0.333...은 1/3을 소수로 나타낸 순환소수입니다.',
         correctRate: 75,
         tags: ['순환소수', '기본개념'],
-        similarQuestions: []
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '2학년',
+        semester: '1학기'
       },
       {
         id: 'test-q-2',
@@ -1802,6 +1847,9 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['식의계산', '중간고사 대비', '종합'],
     folderId: 'folder-2',
     qrCode: 'enabled',
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -1996,6 +2044,9 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['일차부등식', '기본', '중간고사 대비'],
     folderId: 'folder-3',
     qrCode: 'enabled',
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -2285,6 +2336,9 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['데모', '테스트'],
     folderId: 'folder-1',
     qrCode: 'enabled',
+    schoolLevel: '중등',
+    grade: '중1',
+    semester: '2',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -2335,6 +2389,9 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['기본', '중간고사 대비', '종합'],
     folderId: 'folder-3',
     qrCode: 'enabled',
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1',
     // step3에서 설정한 추가 정보들
     worksheetSettings: {
       grade: '중2',
@@ -3594,4 +3651,185 @@ export const dummyAIAnalysisData: AIAnalysisData[] = [
 // AI 분석 데이터 조회 함수
 export const getAIAnalysisData = (studentId: string): AIAnalysisData | undefined => {
   return dummyAIAnalysisData.find(data => data.studentId === studentId);
+};
+
+// 콘텐츠 관리 더미 데이터
+export const dummyContentItems: ContentItem[] = [
+  {
+    id: 'content-1',
+    title: '서울고등학교 2024년 1학기 중간고사',
+    description: '수학 중간고사 기출문제 (확률과 통계 단원)',
+    teacherId: 'teacher-1',
+    teacherName: '김선생',
+    fileType: 'pdf',
+    fileName: 'seoul_high_2024_mid_math.pdf',
+    fileSize: 2048576, // 2MB
+    filePath: '/uploads/content/seoul_high_2024_mid_math.pdf',
+    thumbnailPath: '/uploads/thumbnails/seoul_high_2024_mid_math.jpg',
+    status: 'completed',
+    createdAt: '2024-03-15T09:00:00Z',
+    updatedAt: '2024-03-15T10:30:00Z',
+    metadata: {
+      schoolName: '서울고등학교',
+      region: '서울특별시',
+      subject: 'math',
+      grade: '고2',
+      semester: '1-1',
+      examYear: 2024,
+      examType: '중간고사',
+      difficulty: 'medium',
+      questionCount: 15,
+      autoTagged: true
+    },
+    sharingSettings: {
+      type: 'public',
+      isPublic: true,
+      allowedTeachers: [],
+      permissions: {
+        canView: true,
+        canEdit: false,
+        canDownload: true
+      },
+      sharedAt: '2024-03-15T10:30:00Z'
+    },
+    extractedQuestions: [], // 실제로는 Question[] 타입의 데이터가 들어감
+    ocrResult: {
+      id: 'ocr-1',
+      contentId: 'content-1',
+      status: 'completed',
+      confidence: 92,
+      extractedText: '1. 확률의 정의에 대해 설명하시오...',
+      processedAt: '2024-03-15T09:15:00Z',
+      processingTime: 45,
+      detectedQuestions: [
+        {
+          id: 'detected-1',
+          questionNumber: 1,
+          content: '확률의 정의에 대해 설명하시오.',
+          type: 'short_answer',
+          boundingBox: { x: 50, y: 100, width: 500, height: 80 },
+          confidence: 95
+        }
+      ]
+    },
+    tags: ['확률', '통계', '중간고사', '서울고등학교']
+  },
+  {
+    id: 'content-2',
+    title: '부산중학교 영어 모의고사',
+    description: '2024년 3월 전국연합학력평가 영어 문제',
+    teacherId: 'teacher-2',
+    teacherName: '이선생',
+    fileType: 'image',
+    fileName: 'busan_middle_english_mock.jpg',
+    fileSize: 1536000, // 1.5MB
+    filePath: '/uploads/content/busan_middle_english_mock.jpg',
+    thumbnailPath: '/uploads/thumbnails/busan_middle_english_mock_thumb.jpg',
+    status: 'processing',
+    createdAt: '2024-03-20T14:00:00Z',
+    updatedAt: '2024-03-20T14:00:00Z',
+    metadata: {
+      schoolName: '부산중학교',
+      region: '부산광역시',
+      subject: 'english',
+      grade: '중3',
+      semester: '2-1',
+      examYear: 2024,
+      examType: '모의고사',
+      difficulty: 'high',
+      questionCount: 0, // 아직 처리 중
+      autoTagged: false
+    },
+    sharingSettings: {
+      type: 'selective',
+      isPublic: false,
+      allowedTeachers: ['teacher-1', 'teacher-3'],
+      permissions: {
+        canView: true,
+        canEdit: true,
+        canDownload: false
+      }
+    },
+    extractedQuestions: [],
+    tags: ['영어', '모의고사', '부산중학교']
+  },
+  {
+    id: 'content-3',
+    title: '대구여자고등학교 국어 기출문제',
+    description: '문학 단원 종합 평가 문제',
+    teacherId: 'teacher-1',
+    teacherName: '김선생',
+    fileType: 'pdf',
+    fileName: 'daegu_girls_korean_literature.pdf',
+    fileSize: 3072000, // 3MB
+    filePath: '/uploads/content/daegu_girls_korean_literature.pdf',
+    thumbnailPath: '/uploads/thumbnails/daegu_girls_korean_literature.jpg',
+    status: 'completed',
+    createdAt: '2024-03-18T11:00:00Z',
+    updatedAt: '2024-03-18T12:15:00Z',
+    metadata: {
+      schoolName: '대구여자고등학교',
+      region: '대구광역시',
+      subject: 'korean',
+      grade: '고1',
+      semester: '1-2',
+      examYear: 2024,
+      examType: '기말고사',
+      difficulty: 'medium',
+      questionCount: 20,
+      autoTagged: true
+    },
+    sharingSettings: {
+      type: 'private',
+      isPublic: false,
+      allowedTeachers: [],
+      permissions: {
+        canView: true,
+        canEdit: true,
+        canDownload: true
+      }
+    },
+    extractedQuestions: [],
+    ocrResult: {
+      id: 'ocr-3',
+      contentId: 'content-3',
+      status: 'completed',
+      confidence: 88,
+      extractedText: '다음 시를 읽고 물음에 답하시오...',
+      processedAt: '2024-03-18T11:30:00Z',
+      processingTime: 67,
+      detectedQuestions: [
+        {
+          id: 'detected-3-1',
+          questionNumber: 1,
+          content: '다음 시에서 화자의 정서를 파악하시오.',
+          type: 'multiple_choice',
+          choices: ['슬픔', '기쁨', '그리움', '분노'],
+          boundingBox: { x: 60, y: 120, width: 480, height: 100 },
+          confidence: 90
+        }
+      ]
+    },
+    tags: ['국어', '문학', '기말고사', '대구여자고등학교']
+  }
+];
+
+// 콘텐츠 관리 관련 유틸리티 함수들
+export const getContentItems = (): ContentItem[] => {
+  return dummyContentItems;
+};
+
+export const getContentItemById = (id: string): ContentItem | undefined => {
+  return dummyContentItems.find(item => item.id === id);
+};
+
+export const getContentItemsByTeacher = (teacherId: string): ContentItem[] => {
+  return dummyContentItems.filter(item => item.teacherId === teacherId);
+};
+
+export const getSharedContentItems = (): ContentItem[] => {
+  return dummyContentItems.filter(item => 
+    item.sharingSettings.isPublic || 
+    item.sharingSettings.type === 'selective'
+  );
 };

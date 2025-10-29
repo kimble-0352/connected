@@ -26,6 +26,7 @@ import {
   useLearningResults,
   useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { User as UserType } from '@/app/types';
 import Link from 'next/link';
 
@@ -39,6 +40,12 @@ const StudentsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<string>('name');
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -120,6 +127,15 @@ const StudentsPage = () => {
     } else {
       return <Badge variant="destructive">관심필요</Badge>;
     }
+  }
+
+  function getSubjectName(subject: string) {
+    const subjectMap: { [key: string]: string } = {
+      'math': '수학',
+      'english': '영어',
+      'korean': '국어'
+    };
+    return subjectMap[subject] || subject;
   }
 
   // 전체 통계 계산
@@ -218,7 +234,12 @@ const StudentsPage = () => {
                           <User className="h-6 w-6 text-blue-600" />
                         </div>
                         <div>
-                          <CardTitle className="text-lg">{student.name}</CardTitle>
+                          <div className="flex items-center gap-2">
+                            <CardTitle className="text-lg">{student.name}</CardTitle>
+                            {student.grade && (
+                              <Badge variant="secondary" className="text-xs">{student.grade}</Badge>
+                            )}
+                          </div>
                           <p className="text-sm text-muted-foreground">{student.memberNumber}</p>
                         </div>
                       </div>
@@ -227,6 +248,20 @@ const StudentsPage = () => {
                   </CardHeader>
                   
                   <CardContent className="space-y-4">
+                    {/* 배정과목 */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">배정과목</span>
+                        <div className="flex gap-1">
+                          {student.assignedSubjects?.map((subject) => (
+                            <Badge key={subject} variant="outline" className="text-xs">
+                              {getSubjectName(subject)}
+                            </Badge>
+                          )) || <span className="text-xs text-muted-foreground">미배정</span>}
+                        </div>
+                      </div>
+                    </div>
+
                     {/* 주요 지표 */}
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">

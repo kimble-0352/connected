@@ -34,8 +34,10 @@ import {
 import { 
   useCurrentUser, 
   useWorksheets,
-  useFolders
+  useFolders,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import Link from 'next/link';
 
 const EditWorksheetPage = () => {
@@ -43,6 +45,7 @@ const EditWorksheetPage = () => {
   const router = useRouter();
   const worksheetId = params.id as string;
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const worksheets = useWorksheets(currentUser?.id);
   const folders = useFolders(currentUser?.id);
   
@@ -91,6 +94,12 @@ const EditWorksheetPage = () => {
     }
   }, [worksheet]);
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">

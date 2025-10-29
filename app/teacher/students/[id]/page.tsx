@@ -30,8 +30,10 @@ import {
   useStudents,
   useAssignments,
   useLearningResults,
-  useWorksheets
+  useWorksheets,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { Subject } from '@/app/types';
 import Link from 'next/link';
 
@@ -39,6 +41,7 @@ const StudentDetailPage = () => {
   const params = useParams();
   const studentId = params.id as string;
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const students = useStudents(currentUser?.id);
   const assignments = useAssignments(currentUser?.id);
   const learningResults = useLearningResults();
@@ -80,6 +83,12 @@ const StudentDetailPage = () => {
   const currentAssignments = filteredData.assignments;
   const currentResults = filteredData.results;
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -244,10 +253,25 @@ const StudentDetailPage = () => {
                 <User className="h-8 w-8 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">{student.name}</h1>
+                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-3xl font-bold">{student.name}</h1>
+                  {student.grade && (
+                    <Badge variant="secondary" className="text-sm">{student.grade}</Badge>
+                  )}
+                </div>
                 <p className="text-muted-foreground">
                   회원번호: {student.memberNumber} | {student.centerName}
                 </p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-sm text-muted-foreground">배정과목:</span>
+                  <div className="flex gap-1">
+                    {student.assignedSubjects?.map((subject) => (
+                      <Badge key={subject} variant="outline" className="text-xs">
+                        {subject === 'math' ? '수학' : subject === 'english' ? '영어' : '국어'}
+                      </Badge>
+                    )) || <span className="text-xs text-muted-foreground">미배정</span>}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

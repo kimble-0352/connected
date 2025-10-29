@@ -717,6 +717,9 @@ export default function CreateWorksheetStep2Page() {
                             <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
                               {getSubjectLabel(question.subject)}
                             </Badge>
+                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                              {question.grade}-{question.semester}
+                            </Badge>
                             <Badge className={getDifficultyColor(question.difficulty)}>
                               {getDifficultyLabel(question.difficulty)}
                             </Badge>

@@ -24,13 +24,16 @@ import {
 import { 
   useCurrentUser, 
   useWorksheets,
-  useFolders
+  useFolders,
+  useAppContext
 } from '@/app/lib/contexts/AppContext';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { WorksheetFilter, Worksheet } from '@/app/types';
 import Link from 'next/link';
 
 const WorksheetsPage = () => {
   const currentUser = useCurrentUser();
+  const { state } = useAppContext();
   const worksheets = useWorksheets(currentUser?.id);
   const folders = useFolders(currentUser?.id);
   
@@ -38,6 +41,12 @@ const WorksheetsPage = () => {
   const [filter, setFilter] = useState<WorksheetFilter>({});
   const [showFolderManagement, setShowFolderManagement] = useState(false);
 
+  // 앱이 초기화되지 않았으면 로딩 표시
+  if (!state.isInitialized) {
+    return <LoadingSpinner />;
+  }
+
+  // 로그인되지 않았으면 로그인 필요 메시지 표시
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -298,6 +307,9 @@ const WorksheetsPage = () => {
                         <Badge variant="outline" className="text-xs">
                           {worksheet.subject === 'math' ? '수학' : 
                            worksheet.subject === 'english' ? '영어' : '국어'}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                          {worksheet.grade}-{worksheet.semester}
                         </Badge>
                       </div>
                     </div>
