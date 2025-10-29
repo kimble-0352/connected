@@ -1556,15 +1556,15 @@ const generateSystematicQuestions = (): Question[] => {
         
         // 학년/학기 정보 매핑
         const gradeMapping: { [key: string]: { schoolLevel: '초등' | '중등' | '고등', grade: string, semester: string } } = {
-          '1-1': { schoolLevel: '중등', grade: '중1', semester: '1학기' },
-          '1-2': { schoolLevel: '중등', grade: '중1', semester: '2학기' },
-          '2-1': { schoolLevel: '중등', grade: '중2', semester: '1학기' },
-          '2-2': { schoolLevel: '중등', grade: '중2', semester: '2학기' },
-          '3-1': { schoolLevel: '중등', grade: '중3', semester: '1학기' },
-          '3-2': { schoolLevel: '중등', grade: '중3', semester: '2학기' }
+          '1-1': { schoolLevel: '중등', grade: '중1', semester: '1' },
+          '1-2': { schoolLevel: '중등', grade: '중1', semester: '2' },
+          '2-1': { schoolLevel: '중등', grade: '중2', semester: '1' },
+          '2-2': { schoolLevel: '중등', grade: '중2', semester: '2' },
+          '3-1': { schoolLevel: '중등', grade: '중3', semester: '1' },
+          '3-2': { schoolLevel: '중등', grade: '중3', semester: '2' }
         };
         
-        const gradeInfo = gradeMapping[grade] || { schoolLevel: '중등', grade: '중2', semester: '1학기' };
+        const gradeInfo = gradeMapping[grade];
         
         const question: Question = {
           id: `${subject}-${difficulty}-${String(i).padStart(3, '0')}`,
@@ -1641,7 +1641,7 @@ export const dummyQuestions: Question[] = [
     similarQuestions: [],
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기'
+    semester: '1'
   },
   {
     id: 'sample-math-2',
@@ -1666,7 +1666,7 @@ export const dummyQuestions: Question[] = [
     similarQuestions: [],
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기'
+    semester: '1'
   },
   {
     id: 'sample-english-1',
@@ -1693,7 +1693,7 @@ export const dummyQuestions: Question[] = [
     similarQuestions: [],
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기'
+    semester: '1'
   },
   {
     id: 'sample-korean-1',
@@ -1715,7 +1715,7 @@ export const dummyQuestions: Question[] = [
     similarQuestions: [],
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기'
+    semester: '1'
   },
   // 체계적으로 생성된 문제들 추가
   ...systematicQuestions
@@ -1763,7 +1763,7 @@ export const dummyWorksheets: Worksheet[] = [
     qrCode: 'enabled',
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기',
+    semester: '1',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -1812,8 +1812,8 @@ export const dummyWorksheets: Worksheet[] = [
         correctRate: 95,
         tags: ['덧셈', '기본연산'],
         similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중1',
+        schoolLevel: '초등',
+        grade: '1학년',
         semester: '1학기'
       },
       {
@@ -1845,7 +1845,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 83,
-    totalQuestions: 3
+    totalQuestions: 3,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-1761633536038',
@@ -1861,7 +1864,7 @@ export const dummyWorksheets: Worksheet[] = [
     qrCode: 'enabled',
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기',
+    semester: '1',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -1936,7 +1939,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-calc-004',
         subject: 'math',
@@ -1962,7 +1966,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-calc-005',
         subject: 'math',
@@ -1985,7 +1990,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-calc-006',
         subject: 'math',
@@ -2011,7 +2017,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-calc-007',
         subject: 'math',
@@ -2031,7 +2038,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-calc-008',
         subject: 'math',
@@ -2051,7 +2059,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'}
+        semester: '1학기'
+      }
     ],
     difficultyDistribution: {
       low: 1,
@@ -2060,7 +2069,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 1
     },
     averageCorrectRate: 63,
-    totalQuestions: 8
+    totalQuestions: 8,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-1761633898694',
@@ -2076,7 +2088,7 @@ export const dummyWorksheets: Worksheet[] = [
     qrCode: 'enabled',
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기',
+    semester: '1',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -2106,7 +2118,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-002',
         subject: 'math',
@@ -2126,7 +2139,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-003',
         subject: 'math',
@@ -2150,7 +2164,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-004',
         subject: 'math',
@@ -2170,7 +2185,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-005',
         subject: 'math',
@@ -2196,7 +2212,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-006',
         subject: 'math',
@@ -2219,7 +2236,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-007',
         subject: 'math',
@@ -2245,7 +2263,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-008',
         subject: 'math',
@@ -2265,7 +2284,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-009',
         subject: 'math',
@@ -2288,7 +2308,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-ineq-010',
         subject: 'math',
@@ -2313,7 +2334,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'}
+        semester: '1학기'
+      }
     ],
     difficultyDistribution: {
       low: 2,
@@ -2322,7 +2344,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 2
     },
     averageCorrectRate: 59,
-    totalQuestions: 10
+    totalQuestions: 10,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   // 추가 테스트 학습지들 (다양한 ID 패턴 지원)
   {
@@ -2337,9 +2362,6 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['테스트'],
     folderId: 'folder-1',
     qrCode: 'enabled',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -2368,7 +2390,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'}
+        semester: '1학기'
+      }
     ],
     difficultyDistribution: {
       low: 1,
@@ -2377,7 +2400,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 90,
-    totalQuestions: 1
+    totalQuestions: 1,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'demo-worksheet',
@@ -2393,7 +2419,7 @@ export const dummyWorksheets: Worksheet[] = [
     qrCode: 'enabled',
     schoolLevel: '중등',
     grade: '중1',
-    semester: '2학기',
+    semester: '2',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -2423,7 +2449,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'}
+        semester: '1학기'
+      }
     ],
     difficultyDistribution: {
       low: 1,
@@ -2432,7 +2459,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 85,
-    totalQuestions: 1
+    totalQuestions: 1,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-1761632888544',
@@ -2448,7 +2478,7 @@ export const dummyWorksheets: Worksheet[] = [
     qrCode: 'enabled',
     schoolLevel: '중등',
     grade: '중2',
-    semester: '1학기',
+    semester: '1',
     // step3에서 설정한 추가 정보들
     worksheetSettings: {
       grade: '중2',
@@ -2479,7 +2509,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-002',
         subject: 'math',
@@ -2503,7 +2534,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-003',
         subject: 'math',
@@ -2523,7 +2555,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-004',
         subject: 'math',
@@ -2549,7 +2582,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-005',
         subject: 'math',
@@ -2572,7 +2606,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-006',
         subject: 'math',
@@ -2593,7 +2628,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-007',
         subject: 'math',
@@ -2613,7 +2649,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-008',
         subject: 'math',
@@ -2639,7 +2676,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
       {
         id: 'q-math-009',
         subject: 'math',
@@ -2663,7 +2701,8 @@ export const dummyWorksheets: Worksheet[] = [
         similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+      },
         {
           id: 'q-math-010',
           subject: 'math',
@@ -2689,7 +2728,8 @@ export const dummyWorksheets: Worksheet[] = [
           similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+        },
         {
           id: 'q-math-011',
           subject: 'math',
@@ -2709,7 +2749,8 @@ export const dummyWorksheets: Worksheet[] = [
           similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'},
+        semester: '1학기'
+        },
         {
           id: 'q-math-012',
           subject: 'math',
@@ -2729,7 +2770,8 @@ export const dummyWorksheets: Worksheet[] = [
           similarQuestions: [],
         schoolLevel: '중등',
         grade: '중2',
-        semester: '1학기'}
+        semester: '1학기'
+        }
     ],
     difficultyDistribution: {
       low: 3,
@@ -2738,7 +2780,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 1
     },
     averageCorrectRate: 65,
-    totalQuestions: 12
+    totalQuestions: 12,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-1',
@@ -2752,9 +2797,6 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['기본', '중간고사 대비'],
     folderId: 'folder-3',
     qrCode: 'QR001',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
@@ -2771,7 +2813,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 60,
-    totalQuestions: 2
+    totalQuestions: 2,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-2',
@@ -2785,9 +2830,6 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['상위권 특화', '심화'],
     folderId: 'folder-1',
     qrCode: 'QR002',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     questions: [dummyQuestions[2], dummyQuestions[4]],
     difficultyDistribution: {
       low: 0,
@@ -2796,7 +2838,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 2
     },
     averageCorrectRate: 27.5,
-    totalQuestions: 2
+    totalQuestions: 2,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-3',
@@ -2809,9 +2854,6 @@ export const dummyWorksheets: Worksheet[] = [
     updatedAt: '2024-03-10T11:15:00Z',
     tags: ['종합', '내신 대비'],
     folderId: 'folder-2',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     questions: [dummyQuestions[3]],
     difficultyDistribution: {
       low: 0,
@@ -2820,7 +2862,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 68,
-    totalQuestions: 1
+    totalQuestions: 1,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-4',
@@ -2834,9 +2879,6 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['기본', '문법'],
     folderId: 'folder-3',
     qrCode: 'QR003',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     questions: [],
     difficultyDistribution: {
       low: 2,
@@ -2845,7 +2887,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 72,
-    totalQuestions: 5
+    totalQuestions: 5,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-5',
@@ -2859,9 +2904,6 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['독해', '심화'],
     folderId: 'folder-1',
     qrCode: 'QR004',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     questions: [],
     difficultyDistribution: {
       low: 0,
@@ -2870,7 +2912,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 65,
-    totalQuestions: 5
+    totalQuestions: 5,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-6',
@@ -2884,9 +2929,6 @@ export const dummyWorksheets: Worksheet[] = [
     tags: ['문학', '분석'],
     folderId: 'folder-2',
     qrCode: 'QR005',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     questions: [],
     difficultyDistribution: {
       low: 1,
@@ -2895,7 +2937,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 78,
-    totalQuestions: 4
+    totalQuestions: 4,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   },
   {
     id: 'worksheet-7',
@@ -2908,9 +2953,6 @@ export const dummyWorksheets: Worksheet[] = [
     updatedAt: '2024-03-20T16:00:00Z',
     tags: ['어법', '맞춤법', '기본'],
     folderId: 'folder-3',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
     questions: [],
     difficultyDistribution: {
       low: 3,
@@ -2919,7 +2961,10 @@ export const dummyWorksheets: Worksheet[] = [
       highest: 0
     },
     averageCorrectRate: 85,
-    totalQuestions: 5
+    totalQuestions: 5,
+    schoolLevel: '중등',
+    grade: '중2',
+    semester: '1학기'
   }
 ];
 

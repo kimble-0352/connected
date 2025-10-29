@@ -41,7 +41,7 @@ const AssignmentSolvePage = () => {
   const assignments = useAssignments(undefined, currentUser?.id);
   const learningResults = useLearningResults(currentUser?.id);
   const worksheets = useWorksheets();
-  const { dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
   
   const assignment = assignments.find(a => a.id === assignmentId);
   const worksheet = assignment ? worksheets.find(w => w.id === assignment.worksheetId) : null;
