@@ -4447,8 +4447,8 @@ export const dummyContentItems: ContentItem[] = [
     fileName: 'busan_middle_english_mock.jpg',
     fileSize: 1536000, // 1.5MB
     filePath: '/uploads/content/busan_middle_english_mock.jpg',
-    thumbnailPath: '/uploads/thumbnails/busan_middle_english_mock_thumb.jpg',
-    status: 'processing',
+    thumbnailPath: '/test-sample.png',
+    status: 'completed',
     createdAt: '2024-03-20T14:00:00Z',
     updatedAt: '2024-03-20T14:00:00Z',
     metadata: {
@@ -4460,7 +4460,7 @@ export const dummyContentItems: ContentItem[] = [
       examYear: 2024,
       examType: '모의고사',
       difficulty: 'high',
-      questionCount: 0, // 아직 처리 중
+      questionCount: 20,
       autoTagged: false
     },
     sharingSettings: {
@@ -4486,7 +4486,7 @@ export const dummyContentItems: ContentItem[] = [
     fileName: 'daegu_girls_korean_literature.pdf',
     fileSize: 3072000, // 3MB
     filePath: '/uploads/content/daegu_girls_korean_literature.pdf',
-    thumbnailPath: '/uploads/thumbnails/daegu_girls_korean_literature.jpg',
+    thumbnailPath: '/test-sample.png',
     status: 'completed',
     createdAt: '2024-03-18T11:00:00Z',
     updatedAt: '2024-03-18T12:15:00Z',

@@ -2,29 +2,23 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Upload, Eye, Share2, Download, MoreHorizontal } from 'lucide-react';
+import { Plus, Search, Upload, Eye, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
 import { useCurrentUser } from '@/app/lib/contexts/AppContext';
 import { getContentItems } from '@/app/lib/data/dummy-data';
-import { ContentItem, ContentFilter, Subject, SharingSettings } from '@/app/types';
+import { ContentItem, ContentFilter, Subject } from '@/app/types';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { SharingSettingsComponent } from '@/components/ui/sharing-settings';
 
 const ContentManagementPage = () => {
   const currentUser = useCurrentUser();
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<ContentFilter>({});
-  const [selectedContentForShare, setSelectedContentForShare] = useState<ContentItem | null>(null);
-  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
-  const [isSavingShare, setIsSavingShare] = useState(false);
 
   const contentItems = getContentItems();
 
@@ -128,11 +122,6 @@ const ContentManagementPage = () => {
     });
   };
 
-  const handleShareClick = (item: ContentItem) => {
-    setSelectedContentForShare(item);
-    setIsShareDialogOpen(true);
-  };
-
   const handleDownloadClick = (item: ContentItem) => {
     try {
       const link = document.createElement('a');
@@ -146,22 +135,6 @@ const ContentManagementPage = () => {
     }
   };
 
-  const handleShareSettingsChange = (settings: SharingSettings) => {
-    console.log('공유 설정 변경:', settings);
-  };
-
-  const handleSaveShareSettings = async () => {
-    setIsSavingShare(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setIsShareDialogOpen(false);
-      setSelectedContentForShare(null);
-    } catch (error) {
-      console.error('공유 설정 저장 실패:', error);
-    } finally {
-      setIsSavingShare(false);
-    }
-  };
 
   if (!currentUser || currentUser.role !== 'teacher') {
     return <div>접근 권한이 없습니다.</div>;
@@ -306,124 +279,134 @@ const ContentManagementPage = () => {
       </Card>
 
       {/* 콘텐츠 목록 */}
-      <div className="space-y-4">
-        {filteredContent.length === 0 ? (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">콘텐츠가 없습니다</h3>
-              <p className="text-muted-foreground mb-4">
-                {searchQuery || Object.keys(filter).length > 0 
-                  ? '검색 조건에 맞는 콘텐츠가 없습니다.' 
-                  : '첫 번째 콘텐츠를 업로드해보세요.'}
-              </p>
-              <Link href="/teacher/content/upload">
-                <Button>콘텐츠 업로드</Button>
-              </Link>
-            </CardContent>
-          </Card>
-        ) : (
-          filteredContent.map((item) => (
+      {filteredContent.length === 0 ? (
+        <Card>
+          <CardContent className="p-8 text-center">
+            <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">콘텐츠가 없습니다</h3>
+            <p className="text-muted-foreground mb-4">
+              {searchQuery || Object.keys(filter).length > 0 
+                ? '검색 조건에 맞는 콘텐츠가 없습니다.' 
+                : '첫 번째 콘텐츠를 업로드해보세요.'}
+            </p>
+            <Link href="/teacher/content/upload">
+              <Button>콘텐츠 업로드</Button>
+            </Link>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          {filteredContent.map((item) => (
             <Card key={item.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <Link href={`/teacher/content/${item.id}`}>
-                          <h3 className="text-lg font-semibold hover:text-primary cursor-pointer">
-                            {item.title}
-                          </h3>
-                        </Link>
-                        {item.description && (
-                          <p className="text-sm text-muted-foreground">{item.description}</p>
-                        )}
-                      </div>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem asChild>
-                            <Link href={`/teacher/content/${item.id}`} className="flex items-center">
-                              <Eye className="h-4 w-4 mr-2" />
-                              상세 보기
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleShareClick(item)}>
-                            <Share2 className="h-4 w-4 mr-2" />
-                            공유 설정
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleDownloadClick(item)}>
-                            <Download className="h-4 w-4 mr-2" />
-                            다운로드
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-2">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <Link href={`/teacher/content/${item.id}`}>
+                      <CardTitle className="text-lg line-clamp-2 mb-2 hover:text-primary cursor-pointer">
+                        {item.title}
+                      </CardTitle>
+                    </Link>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       {getStatusBadge(item.status)}
                       {getSharingBadge(item.sharingSettings.type, item.sharingSettings.isPublic)}
-                      <Badge variant="outline">{getSubjectName(item.metadata.subject)}</Badge>
-                      <Badge variant="outline">{item.metadata.grade}</Badge>
-                      {item.metadata.schoolName && (
-                        <Badge variant="outline">{item.metadata.schoolName}</Badge>
-                      )}
+                      <Badge variant="outline" className="text-xs">
+                        {getSubjectName(item.metadata.subject)}
+                      </Badge>
+                      <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                        {item.metadata.grade}
+                      </Badge>
                     </div>
+                  </div>
+                </div>
+                
+                {item.description && (
+                  <CardDescription className="line-clamp-2">
+                    {item.description}
+                  </CardDescription>
+                )}
+              </CardHeader>
+              
+              <CardContent className="space-y-4">
+                {/* 문항 정보 */}
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">문항 수</span>
+                  <span className="font-medium">{item.metadata.questionCount}개</span>
+                </div>
 
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                      <span>파일: {item.fileName}</span>
-                      <span>크기: {formatFileSize(item.fileSize)}</span>
-                      <span>문항: {item.metadata.questionCount}개</span>
-                      <span>업로드: {formatDate(item.createdAt)}</span>
-                      <span>작성자: {item.teacherName}</span>
+                {/* 학교 정보 */}
+                {item.metadata.schoolName && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">학교명</span>
+                      <span className="font-medium text-xs">{item.metadata.schoolName}</span>
                     </div>
-
-                    {item.status === 'processing' && item.ocrResult && (
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span>OCR 처리 중...</span>
-                          <span>75%</span>
-                        </div>
-                        <Progress value={75} className="h-2" />
-                      </div>
-                    )}
-
-                    {item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1">
-                        {item.tags.map((tag, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            #{tag}
-                          </Badge>
-                        ))}
+                    {item.metadata.region && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">지역</span>
+                        <span className="font-medium text-xs">{item.metadata.region}</span>
                       </div>
                     )}
                   </div>
+                )}
+
+                {/* OCR 처리 상태 */}
+                {item.status === 'processing' && item.ocrResult && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span>OCR 처리 중...</span>
+                      <span>75%</span>
+                    </div>
+                    <Progress value={75} className="h-2" />
+                  </div>
+                )}
+
+                {/* 태그 */}
+                {item.tags.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">태그</p>
+                    <div className="flex flex-wrap gap-1">
+                      {item.tags.slice(0, 3).map((tag, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          #{tag}
+                        </Badge>
+                      ))}
+                      {item.tags.length > 3 && (
+                        <Badge variant="secondary" className="text-xs">
+                          +{item.tags.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                {/* 생성일 및 작성자 */}
+                <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t">
+                  <span>작성자: {item.teacherName}</span>
+                  <span>{formatDate(item.createdAt)}</span>
+                </div>
+                
+                {/* 액션 버튼 */}
+                <div className="flex gap-2 pt-2">
+                  <Link href={`/teacher/content/${item.id}`} className="flex-1">
+                    <Button variant="outline" size="sm" className="w-full gap-2">
+                      <Eye className="h-4 w-4" />
+                      상세보기
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 gap-2"
+                    onClick={() => handleDownloadClick(item)}
+                  >
+                    <Download className="h-4 w-4" />
+                    다운로드
+                  </Button>
                 </div>
               </CardContent>
             </Card>
-          ))
-        )}
-      </div>
-
-      {/* 공유 설정 다이얼로그 */}
-      {selectedContentForShare && (
-        <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>공유 설정 - {selectedContentForShare.title}</DialogTitle>
-            </DialogHeader>
-            <SharingSettingsComponent
-              initialSettings={selectedContentForShare.sharingSettings}
-              onSettingsChange={handleShareSettingsChange}
-              onSave={handleSaveShareSettings}
-              isSaving={isSavingShare}
-            />
-          </DialogContent>
-        </Dialog>
+          ))}
+        </div>
       )}
       </div>
     </MainLayout>
