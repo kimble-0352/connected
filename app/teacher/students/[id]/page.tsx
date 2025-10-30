@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { StatsCard } from '@/components/ui/stats-card';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -39,6 +39,7 @@ import Link from 'next/link';
 
 const StudentDetailPage = () => {
   const params = useParams();
+  const router = useRouter();
   const studentId = params.id as string;
   const currentUser = useCurrentUser();
   const { state } = useAppContext();
@@ -277,11 +278,19 @@ const StudentDetailPage = () => {
           </div>
           
           <div className="flex gap-2">
-            <Button variant="outline" className="gap-2">
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => router.push(`/teacher/students/${studentId}/reports`)}
+            >
               <BarChart3 className="h-4 w-4" />
               학습 리포트
             </Button>
-            <Button variant="outline" className="gap-2">
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => router.push(`/teacher/assignments/create?selectedStudents=${studentId}`)}
+            >
               <ClipboardList className="h-4 w-4" />
               과제 배정
             </Button>
@@ -605,26 +614,6 @@ const StudentDetailPage = () => {
               </CardContent>
             </Card>
 
-            {/* 빠른 작업 */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">빠른 작업</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start gap-2" size="sm">
-                  <ClipboardList className="h-4 w-4" />
-                  새 과제 배정
-                </Button>
-                <Button variant="outline" className="w-full justify-start gap-2" size="sm">
-                  <BarChart3 className="h-4 w-4" />
-                  상세 학습 리포트
-                </Button>
-                <Button variant="outline" className="w-full justify-start gap-2" size="sm">
-                  <AlertCircle className="h-4 w-4" />
-                  학습 알림 발송
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

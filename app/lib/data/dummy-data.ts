@@ -1748,320 +1748,6 @@ export const dummyFolders: Folder[] = [
 
 // 더미 학습지 데이터
 export const dummyWorksheets: Worksheet[] = [
-  // 테스트용 기본 학습지 (일반적인 ID 패턴들을 지원)
-  {
-    id: 'test-worksheet',
-    title: '테스트용 OMR 학습지',
-    description: 'QR 코드 테스트를 위한 기본 학습지입니다.',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'published',
-    createdAt: '2024-03-01T09:00:00Z',
-    updatedAt: '2024-03-01T09:00:00Z',
-    tags: ['테스트', '기본'],
-    folderId: 'folder-1',
-    qrCode: 'enabled',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
-    worksheetSettings: {
-      grade: '중2',
-      creator: '김선생',
-      layout: 'single',
-      includeAnswers: true,
-      includeExplanations: true,
-      qrEnabled: true
-    },
-    questions: [
-      {
-        id: 'test-q-1',
-        subject: 'math',
-        content: '다음 중 순환소수인 것은?',
-        type: 'multiple_choice',
-        difficulty: 'medium',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-1',
-          lessonId: 'lesson-2-1-1-1'
-        },
-        choices: ['0.25', '0.333...', '0.5', '0.75'],
-        correctAnswer: '0.333...',
-        explanation: '0.333...은 1/3을 소수로 나타낸 순환소수입니다.',
-        correctRate: 75,
-        tags: ['순환소수', '기본개념'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '2학년',
-        semester: '1학기'
-      },
-      {
-        id: 'test-q-2',
-        subject: 'math',
-        content: '2 + 3 = ?',
-        type: 'short_answer',
-        difficulty: 'low',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-1',
-          lessonId: 'lesson-2-1-1-1'
-        },
-        correctAnswer: '5',
-        explanation: '2와 3을 더하면 5입니다.',
-        correctRate: 95,
-        tags: ['덧셈', '기본연산'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중1',
-        semester: '1학기'
-      },
-      {
-        id: 'test-q-3',
-        subject: 'math',
-        content: '다음 식을 간단히 하시오: 2x + 3x',
-        type: 'short_answer',
-        difficulty: 'medium',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-1',
-          lessonId: 'lesson-2-1-1-2'
-        },
-        correctAnswer: '5x',
-        explanation: '동류항끼리 계수를 더하면 2x + 3x = 5x입니다.',
-        correctRate: 80,
-        tags: ['동류항', '식의계산'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중1',
-        semester: '1학기'
-      }
-    ],
-    difficultyDistribution: {
-      low: 1,
-      medium: 2,
-      high: 0,
-      highest: 0
-    },
-    averageCorrectRate: 83,
-    totalQuestions: 3
-  },
-  {
-    id: 'worksheet-1761633536038',
-    title: '중2-1 식의 계산 종합 학습지',
-    description: '단항식과 다항식의 계산부터 인수분해까지 다루는 종합 학습지입니다.',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'published',
-    createdAt: '2024-03-02T10:00:00Z',
-    updatedAt: '2024-03-02T10:00:00Z',
-    tags: ['식의계산', '중간고사 대비', '종합'],
-    folderId: 'folder-2',
-    qrCode: 'enabled',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
-    worksheetSettings: {
-      grade: '중2',
-      creator: '김선생',
-      layout: 'single',
-      includeAnswers: true,
-      includeExplanations: true,
-      qrEnabled: true
-    },
-    questions: [
-      {
-        id: 'q-calc-001',
-        subject: 'math',
-        content: '다음 식을 계산하시오: 3x² × 2x³',
-        type: 'short_answer',
-        difficulty: 'low',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-1'
-        },
-        correctAnswer: '6x⁵',
-        explanation: '지수법칙에 의해 3 × 2 = 6, x² × x³ = x⁵이므로 답은 6x⁵입니다.',
-        correctRate: 85,
-        tags: ['지수법칙', '단항식의 곱셈'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'
-      },
-      {
-        id: 'q-calc-002',
-        subject: 'math',
-        content: '다음 중 (2x + 3)(x - 1)을 전개한 결과는?',
-        type: 'multiple_choice',
-        difficulty: 'medium',
-        source: 'textbook',
-        sourceInfo: {
-          textbookName: '중학수학 2-1'
-        },
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-2'
-        },
-        choices: ['2x² + x - 3', '2x² - 2x + 3x - 3', '2x² + x - 3', '2x² - x + 3'],
-        correctAnswer: '2x² + x - 3',
-        explanation: '(2x + 3)(x - 1) = 2x² - 2x + 3x - 3 = 2x² + x - 3',
-        correctRate: 72,
-        tags: ['다항식의 곱셈', '전개'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'
-      },
-      {
-        id: 'q-calc-003',
-        subject: 'math',
-        content: '다음 식을 인수분해하시오: x² - 5x + 6',
-        type: 'short_answer',
-        difficulty: 'medium',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-3'
-        },
-        correctAnswer: '(x - 2)(x - 3)',
-        explanation: 'x² - 5x + 6 = (x - 2)(x - 3)입니다. 두 수의 곱이 6이고 합이 -5인 수는 -2와 -3입니다.',
-        correctRate: 68,
-        tags: ['인수분해', '이차식'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'},
-      {
-        id: 'q-calc-004',
-        subject: 'math',
-        content: '다음 중 (a + b)² - (a - b)²을 간단히 한 결과는?',
-        type: 'multiple_choice',
-        difficulty: 'high',
-        source: 'school_exam',
-        sourceInfo: {
-          schoolName: '서울중학교',
-          examYear: 2024,
-          examType: '중간고사'
-        },
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-3'
-        },
-        choices: ['2ab', '4ab', '2a²', '2b²'],
-        correctAnswer: '4ab',
-        explanation: '(a + b)² - (a - b)² = (a² + 2ab + b²) - (a² - 2ab + b²) = 4ab',
-        correctRate: 58,
-        tags: ['완전제곱식', '전개', '인수분해'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'},
-      {
-        id: 'q-calc-005',
-        subject: 'math',
-        content: '다음 식을 계산하시오: (2x - 3y)² + (2x + 3y)²',
-        type: 'short_answer',
-        difficulty: 'high',
-        source: 'textbook',
-        sourceInfo: {
-          textbookName: '최상위 수학 2-1'
-        },
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-3'
-        },
-        correctAnswer: '8x² + 18y²',
-        explanation: '(2x - 3y)² + (2x + 3y)² = (4x² - 12xy + 9y²) + (4x² + 12xy + 9y²) = 8x² + 18y²',
-        correctRate: 45,
-        tags: ['완전제곱식', '심화'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'},
-      {
-        id: 'q-calc-006',
-        subject: 'math',
-        content: '다음 중 x⁴ - 16을 인수분해한 결과는?',
-        type: 'multiple_choice',
-        difficulty: 'highest',
-        source: 'school_exam',
-        sourceInfo: {
-          schoolName: '강남중학교',
-          examYear: 2024,
-          examType: '기말고사'
-        },
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-3'
-        },
-        choices: ['(x² + 4)(x² - 4)', '(x² + 4)(x + 2)(x - 2)', '(x + 2)²(x - 2)²', '(x + 4)(x - 4)'],
-        correctAnswer: '(x² + 4)(x + 2)(x - 2)',
-        explanation: 'x⁴ - 16 = (x²)² - 4² = (x² + 4)(x² - 4) = (x² + 4)(x + 2)(x - 2)',
-        correctRate: 32,
-        tags: ['인수분해', '차의제곱', '최고난도'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'},
-      {
-        id: 'q-calc-007',
-        subject: 'math',
-        content: '다음 식을 간단히 하시오: (x + 2)(x - 2) - (x - 1)²',
-        type: 'short_answer',
-        difficulty: 'medium',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-2'
-        },
-        correctAnswer: '2x - 5',
-        explanation: '(x + 2)(x - 2) - (x - 1)² = (x² - 4) - (x² - 2x + 1) = x² - 4 - x² + 2x - 1 = 2x - 5',
-        correctRate: 65,
-        tags: ['차의제곱', '완전제곱식', '전개'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'},
-      {
-        id: 'q-calc-008',
-        subject: 'math',
-        content: '어떤 수를 x라 할 때, (x + 3)² = x² + 6x + 9가 성립하는 이유를 설명하시오.',
-        type: 'essay',
-        difficulty: 'medium',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-2-1',
-          sectionId: 'section-2-1-2',
-          lessonId: 'lesson-2-1-2-3'
-        },
-        correctAnswer: '완전제곱식의 공식 (a + b)² = a² + 2ab + b²에 의해 성립한다.',
-        explanation: '(x + 3)²는 완전제곱식으로, 공식에 따라 x² + 2·x·3 + 3² = x² + 6x + 9가 됩니다.',
-        correctRate: 78,
-        tags: ['완전제곱식', '공식', '서술형'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'}
-    ],
-    difficultyDistribution: {
-      low: 1,
-      medium: 4,
-      high: 2,
-      highest: 1
-    },
-    averageCorrectRate: 63,
-    totalQuestions: 8
-  },
   {
     id: 'worksheet-1761633898694',
     title: '중2-1 일차부등식 기본 학습지',
@@ -2324,116 +2010,6 @@ export const dummyWorksheets: Worksheet[] = [
     averageCorrectRate: 59,
     totalQuestions: 10
   },
-  // 추가 테스트 학습지들 (다양한 ID 패턴 지원)
-  {
-    id: 'worksheet123',
-    title: '간단한 수학 문제',
-    description: 'worksheet123 ID 패턴 테스트용',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'published',
-    createdAt: '2024-03-01T09:00:00Z',
-    updatedAt: '2024-03-01T09:00:00Z',
-    tags: ['테스트'],
-    folderId: 'folder-1',
-    qrCode: 'enabled',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
-    worksheetSettings: {
-      grade: '중2',
-      creator: '김선생',
-      layout: 'single',
-      includeAnswers: true,
-      includeExplanations: true,
-      qrEnabled: true
-    },
-    questions: [
-      {
-        id: 'simple-q-1',
-        subject: 'math',
-        content: '5 × 3 = ?',
-        type: 'short_answer',
-        difficulty: 'low',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-1-1',
-          sectionId: 'section-1-1-1',
-          lessonId: 'lesson-1-1-1-1'
-        },
-        correctAnswer: '15',
-        explanation: '5에 3을 곱하면 15입니다.',
-        correctRate: 90,
-        tags: ['곱셈', '기본연산'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'}
-    ],
-    difficultyDistribution: {
-      low: 1,
-      medium: 0,
-      high: 0,
-      highest: 0
-    },
-    averageCorrectRate: 90,
-    totalQuestions: 1
-  },
-  {
-    id: 'demo-worksheet',
-    title: '데모 학습지',
-    description: 'demo-worksheet ID 패턴 테스트용',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'published',
-    createdAt: '2024-03-01T09:00:00Z',
-    updatedAt: '2024-03-01T09:00:00Z',
-    tags: ['데모', '테스트'],
-    folderId: 'folder-1',
-    qrCode: 'enabled',
-    schoolLevel: '중등',
-    grade: '중1',
-    semester: '2학기',
-    worksheetSettings: {
-      grade: '중2',
-      creator: '김선생',
-      layout: 'single',
-      includeAnswers: true,
-      includeExplanations: true,
-      qrEnabled: true
-    },
-    questions: [
-      {
-        id: 'demo-q-1',
-        subject: 'math',
-        content: '다음 중 가장 큰 수는?',
-        type: 'multiple_choice',
-        difficulty: 'low',
-        source: 'internal',
-        curriculum: {
-          chapterId: 'chapter-1-1',
-          sectionId: 'section-1-1-1',
-          lessonId: 'lesson-1-1-1-1'
-        },
-        choices: ['0.5', '0.7', '0.3', '0.9'],
-        correctAnswer: '0.9',
-        explanation: '0.9가 가장 큰 수입니다.',
-        correctRate: 85,
-        tags: ['수의크기', '기본개념'],
-        similarQuestions: [],
-        schoolLevel: '중등',
-        grade: '중2',
-        semester: '1학기'}
-    ],
-    difficultyDistribution: {
-      low: 1,
-      medium: 0,
-      high: 0,
-      highest: 0
-    },
-    averageCorrectRate: 85,
-    totalQuestions: 1
-  },
   {
     id: 'worksheet-1761632888544',
     title: '중2-1 유리수와 순환소수 종합 학습지',
@@ -2453,7 +2029,7 @@ export const dummyWorksheets: Worksheet[] = [
     worksheetSettings: {
       grade: '중2',
       creator: '김선생',
-      layout: 'single',
+      layout: 'double',
       includeAnswers: true,
       includeExplanations: true,
       qrEnabled: true
@@ -2741,88 +2317,6 @@ export const dummyWorksheets: Worksheet[] = [
     totalQuestions: 12
   },
   {
-    id: 'worksheet-1',
-    title: '중2-1 유리수와 순환소수 기본',
-    description: '유리수와 순환소수의 기본 개념을 다지는 학습지',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'published',
-    createdAt: '2024-03-01T09:00:00Z',
-    updatedAt: '2024-03-01T09:00:00Z',
-    tags: ['기본', '중간고사 대비'],
-    folderId: 'folder-3',
-    qrCode: 'QR001',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
-    worksheetSettings: {
-      grade: '중2',
-      creator: '김선생',
-      layout: 'single',
-      includeAnswers: false,
-      includeExplanations: false,
-      qrEnabled: true
-    },
-    questions: [dummyQuestions[0], dummyQuestions[1]],
-    difficultyDistribution: {
-      low: 0,
-      medium: 1,
-      high: 1,
-      highest: 0
-    },
-    averageCorrectRate: 60,
-    totalQuestions: 2
-  },
-  {
-    id: 'worksheet-2',
-    title: '중2-1 식의 계산 심화',
-    description: '상위권 학생을 위한 식의 계산 심화 문제',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'published',
-    createdAt: '2024-03-05T14:30:00Z',
-    updatedAt: '2024-03-05T14:30:00Z',
-    tags: ['상위권 특화', '심화'],
-    folderId: 'folder-1',
-    qrCode: 'QR002',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
-    questions: [dummyQuestions[2], dummyQuestions[4]],
-    difficultyDistribution: {
-      low: 0,
-      medium: 0,
-      high: 0,
-      highest: 2
-    },
-    averageCorrectRate: 27.5,
-    totalQuestions: 2
-  },
-  {
-    id: 'worksheet-3',
-    title: '중2-1 일차부등식 종합',
-    description: '일차부등식의 전반적인 내용을 다루는 학습지',
-    subject: 'math',
-    teacherId: 'teacher-1',
-    status: 'draft',
-    createdAt: '2024-03-10T11:15:00Z',
-    updatedAt: '2024-03-10T11:15:00Z',
-    tags: ['종합', '내신 대비'],
-    folderId: 'folder-2',
-    schoolLevel: '중등',
-    grade: '중2',
-    semester: '1학기',
-    questions: [dummyQuestions[3]],
-    difficultyDistribution: {
-      low: 0,
-      medium: 1,
-      high: 0,
-      highest: 0
-    },
-    averageCorrectRate: 68,
-    totalQuestions: 1
-  },
-  {
     id: 'worksheet-4',
     title: '중2 영어 문법 기초',
     description: '중2 영어 기본 문법을 다지는 학습지',
@@ -2837,15 +2331,283 @@ export const dummyWorksheets: Worksheet[] = [
     schoolLevel: '중등',
     grade: '중2',
     semester: '1학기',
-    questions: [],
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: false,
+      includeExplanations: false,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'q-eng-001',
+        subject: 'english',
+        content: 'Choose the correct form of the verb: "She _____ to school every day."',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-1',
+          lessonId: 'lesson-2-1-1-1'
+        },
+        choices: ['go', 'goes', 'going', 'gone'],
+        correctAnswer: 'goes',
+        explanation: '3인칭 단수 주어 She에는 동사에 -s를 붙입니다.',
+        correctRate: 85,
+        tags: ['현재시제', '3인칭 단수'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-002',
+        subject: 'english',
+        content: 'What is the past tense of "eat"?',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-1'
+        },
+        correctAnswer: 'ate',
+        explanation: 'eat의 과거형은 불규칙 변화로 ate입니다.',
+        correctRate: 78,
+        tags: ['과거시제', '불규칙동사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-003',
+        subject: 'english',
+        content: 'Choose the correct sentence:',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-1'
+        },
+        choices: ['I am study English.', 'I am studying English.', 'I am studies English.', 'I studying English.'],
+        correctAnswer: 'I am studying English.',
+        explanation: '현재진행형은 be동사 + -ing 형태입니다.',
+        correctRate: 72,
+        tags: ['현재진행형', '문법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-004',
+        subject: 'english',
+        content: 'Fill in the blank: "There _____ many books on the table."',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-4',
+          lessonId: 'lesson-2-1-4-1'
+        },
+        choices: ['is', 'are', 'was', 'were'],
+        correctAnswer: 'are',
+        explanation: 'many books는 복수이므로 are를 사용합니다.',
+        correctRate: 68,
+        tags: ['be동사', '단수복수'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-005',
+        subject: 'english',
+        content: 'What does "beautiful" mean in Korean?',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-5',
+          lessonId: 'lesson-2-1-5-1'
+        },
+        correctAnswer: '아름다운',
+        explanation: 'beautiful은 "아름다운"이라는 뜻입니다.',
+        correctRate: 90,
+        tags: ['어휘', '형용사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-006',
+        subject: 'english',
+        content: 'Choose the correct preposition: "I will meet you _____ 3 o\'clock."',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-6',
+          lessonId: 'lesson-2-1-6-1'
+        },
+        choices: ['in', 'on', 'at', 'by'],
+        correctAnswer: 'at',
+        explanation: '시각 앞에는 전치사 at을 사용합니다.',
+        correctRate: 65,
+        tags: ['전치사', '시간'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-007',
+        subject: 'english',
+        content: 'Make a negative sentence: "He plays soccer."',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-7',
+          lessonId: 'lesson-2-1-7-1'
+        },
+        correctAnswer: 'He does not play soccer.',
+        explanation: '일반동사의 부정문은 does not + 동사원형을 사용합니다.',
+        correctRate: 70,
+        tags: ['부정문', '일반동사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-008',
+        subject: 'english',
+        content: 'Choose the correct question form:',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-8',
+          lessonId: 'lesson-2-1-8-1'
+        },
+        choices: ['Do you like music?', 'You do like music?', 'Like you music?', 'You like music do?'],
+        correctAnswer: 'Do you like music?',
+        explanation: '일반동사의 의문문은 Do/Does로 시작합니다.',
+        correctRate: 75,
+        tags: ['의문문', '일반동사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-009',
+        subject: 'english',
+        content: 'What is the plural form of "child"?',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-9',
+          lessonId: 'lesson-2-1-9-1'
+        },
+        correctAnswer: 'children',
+        explanation: 'child의 복수형은 불규칙 변화로 children입니다.',
+        correctRate: 60,
+        tags: ['복수형', '불규칙변화'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-010',
+        subject: 'english',
+        content: 'Choose the correct comparative form: "This book is _____ than that one."',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-10',
+          lessonId: 'lesson-2-1-10-1'
+        },
+        choices: ['more interesting', 'most interesting', 'interestinger', 'interestingest'],
+        correctAnswer: 'more interesting',
+        explanation: '3음절 이상의 형용사는 more를 사용하여 비교급을 만듭니다.',
+        correctRate: 55,
+        tags: ['비교급', '형용사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-011',
+        subject: 'english',
+        content: 'Fill in the blank with the correct modal verb: "You _____ study hard for the exam."',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-11',
+          lessonId: 'lesson-2-1-11-1'
+        },
+        choices: ['can', 'should', 'will', 'may'],
+        correctAnswer: 'should',
+        explanation: 'should는 "~해야 한다"는 의미의 조동사입니다.',
+        correctRate: 62,
+        tags: ['조동사', '의무'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-012',
+        subject: 'english',
+        content: 'Write the correct form: "I _____ (visit) my grandmother last weekend."',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-12',
+          lessonId: 'lesson-2-1-12-1'
+        },
+        correctAnswer: 'visited',
+        explanation: 'last weekend는 과거를 나타내므로 과거형 visited를 사용합니다.',
+        correctRate: 73,
+        tags: ['과거시제', '규칙동사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      }
+    ],
     difficultyDistribution: {
-      low: 2,
-      medium: 3,
-      high: 0,
+      low: 3,
+      medium: 7,
+      high: 2,
       highest: 0
     },
-    averageCorrectRate: 72,
-    totalQuestions: 5
+    averageCorrectRate: 71,
+    totalQuestions: 12
   },
   {
     id: 'worksheet-5',
@@ -2862,15 +2624,328 @@ export const dummyWorksheets: Worksheet[] = [
     schoolLevel: '중등',
     grade: '중2',
     semester: '1학기',
-    questions: [],
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'double',
+      includeAnswers: true,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'q-eng-read-001',
+        subject: 'english',
+        content: 'Read the passage and answer: "Tom goes to school by bus every morning. He likes reading books on the bus." What does Tom do on the bus?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-1',
+          lessonId: 'lesson-2-2-1-1'
+        },
+        choices: ['He sleeps', 'He reads books', 'He listens to music', 'He talks to friends'],
+        correctAnswer: 'He reads books',
+        explanation: '지문에서 "He likes reading books on the bus"라고 했습니다.',
+        correctRate: 82,
+        tags: ['독해', '세부사항'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-002',
+        subject: 'english',
+        content: 'Choose the best title for this passage: "Sarah loves animals. She has two cats and one dog. Every day, she feeds them and plays with them. She wants to be a veterinarian."',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-2',
+          lessonId: 'lesson-2-2-2-1'
+        },
+        choices: ['Sarah\'s Pets', 'How to Feed Animals', 'Sarah\'s Dream Job', 'Sarah and Her Love for Animals'],
+        correctAnswer: 'Sarah and Her Love for Animals',
+        explanation: '지문 전체가 Sarah의 동물 사랑에 대한 내용입니다.',
+        correctRate: 68,
+        tags: ['독해', '주제'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-003',
+        subject: 'english',
+        content: 'What can you infer from this sentence? "Mike looked at his watch and started running to the station."',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-3',
+          lessonId: 'lesson-2-2-3-1'
+        },
+        choices: ['Mike likes running', 'Mike is late', 'Mike lost his watch', 'Mike is exercising'],
+        correctAnswer: 'Mike is late',
+        explanation: '시계를 보고 역으로 뛰어간다는 것은 늦었다는 것을 의미합니다.',
+        correctRate: 55,
+        tags: ['독해', '추론'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-004',
+        subject: 'english',
+        content: 'Read and find the main idea: "Recycling is important for our environment. We can recycle paper, plastic, and glass. When we recycle, we help reduce waste and protect nature."',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-4',
+          lessonId: 'lesson-2-2-4-1'
+        },
+        correctAnswer: 'Recycling helps protect the environment',
+        explanation: '지문의 주요 내용은 재활용이 환경 보호에 도움이 된다는 것입니다.',
+        correctRate: 72,
+        tags: ['독해', '주제'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-005',
+        subject: 'english',
+        content: 'According to the passage, what should you do before cooking? "Before you start cooking, wash your hands and prepare all ingredients. Make sure your kitchen is clean."',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-5',
+          lessonId: 'lesson-2-2-5-1'
+        },
+        choices: ['Eat something', 'Wash hands and prepare ingredients', 'Call your friends', 'Watch TV'],
+        correctAnswer: 'Wash hands and prepare ingredients',
+        explanation: '지문에서 요리하기 전에 손을 씻고 재료를 준비하라고 했습니다.',
+        correctRate: 88,
+        tags: ['독해', '세부사항'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-006',
+        subject: 'english',
+        content: 'What does "brilliant" mean in this context? "The scientist made a brilliant discovery that changed everything."',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-6',
+          lessonId: 'lesson-2-2-6-1'
+        },
+        choices: ['bright', 'excellent', 'difficult', 'expensive'],
+        correctAnswer: 'excellent',
+        explanation: '문맥상 brilliant는 "뛰어난, 훌륭한"이라는 의미입니다.',
+        correctRate: 62,
+        tags: ['독해', '어휘'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-007',
+        subject: 'english',
+        content: 'Read the dialogue and answer: "A: How was your vacation? B: It was amazing! I visited many museums and tried delicious food." How does B feel about the vacation?',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-7',
+          lessonId: 'lesson-2-2-7-1'
+        },
+        correctAnswer: 'Happy/Satisfied/Good',
+        explanation: '"amazing"이라고 표현한 것으로 보아 만족스러워합니다.',
+        correctRate: 85,
+        tags: ['독해', '감정'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-008',
+        subject: 'english',
+        content: 'What is the purpose of this text? "Don\'t forget to bring your umbrella today. The weather forecast says it will rain this afternoon."',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-8',
+          lessonId: 'lesson-2-2-8-1'
+        },
+        choices: ['To give advice', 'To tell a story', 'To ask a question', 'To describe weather'],
+        correctAnswer: 'To give advice',
+        explanation: '우산을 가져가라고 조언하는 내용입니다.',
+        correctRate: 75,
+        tags: ['독해', '목적'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-009',
+        subject: 'english',
+        content: 'Choose the correct order of events: "First, I woke up. Then, I brushed my teeth. After that, I had breakfast. Finally, I went to school."',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-9',
+          lessonId: 'lesson-2-2-9-1'
+        },
+        choices: ['breakfast → teeth → wake up → school', 'wake up → teeth → breakfast → school', 'teeth → wake up → school → breakfast', 'school → breakfast → teeth → wake up'],
+        correctAnswer: 'wake up → teeth → breakfast → school',
+        explanation: '지문에 제시된 순서대로입니다.',
+        correctRate: 92,
+        tags: ['독해', '순서'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-010',
+        subject: 'english',
+        content: 'What does the underlined word refer to? "John bought a new bicycle. It was red and very fast."',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-10',
+          lessonId: 'lesson-2-2-10-1'
+        },
+        correctAnswer: 'bicycle',
+        explanation: '"It"은 앞에 언급된 "bicycle"을 가리킵니다.',
+        correctRate: 89,
+        tags: ['독해', '대명사'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-011',
+        subject: 'english',
+        content: 'Read and choose the best response: "I\'m sorry I\'m late. The traffic was terrible."',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-11',
+          lessonId: 'lesson-2-2-11-1'
+        },
+        choices: ['That\'s okay. Don\'t worry about it.', 'Where did you go?', 'What time is it?', 'I don\'t like traffic.'],
+        correctAnswer: 'That\'s okay. Don\'t worry about it.',
+        explanation: '사과에 대한 적절한 응답입니다.',
+        correctRate: 78,
+        tags: ['독해', '대화'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-012',
+        subject: 'english',
+        content: 'What can you conclude from this passage? "Emma studies for 3 hours every day. She always does her homework first. She gets good grades in all subjects."',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-12',
+          lessonId: 'lesson-2-2-12-1'
+        },
+        choices: ['Emma is lazy', 'Emma is a hard-working student', 'Emma doesn\'t like school', 'Emma has many friends'],
+        correctAnswer: 'Emma is a hard-working student',
+        explanation: '매일 3시간 공부하고 좋은 성적을 받는다는 것으로 성실함을 알 수 있습니다.',
+        correctRate: 71,
+        tags: ['독해', '결론'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-013',
+        subject: 'english',
+        content: 'Find the synonym of "enormous" in this sentence: "The enormous elephant walked slowly through the forest."',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-13',
+          lessonId: 'lesson-2-2-13-1'
+        },
+        choices: ['small', 'huge', 'fast', 'beautiful'],
+        correctAnswer: 'huge',
+        explanation: 'enormous는 "거대한"이라는 뜻으로 huge와 같은 의미입니다.',
+        correctRate: 58,
+        tags: ['독해', '어휘', '동의어'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-eng-read-014',
+        subject: 'english',
+        content: 'According to the schedule, what time does the library close? "Library Hours: Monday-Friday 9:00 AM - 8:00 PM, Saturday 10:00 AM - 6:00 PM, Sunday Closed"',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-14',
+          lessonId: 'lesson-2-2-14-1'
+        },
+        correctAnswer: '8:00 PM (weekdays) / 6:00 PM (Saturday)',
+        explanation: '평일은 오후 8시, 토요일은 오후 6시에 닫습니다.',
+        correctRate: 94,
+        tags: ['독해', '정보찾기'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      }
+    ],
     difficultyDistribution: {
-      low: 0,
-      medium: 2,
-      high: 3,
+      low: 4,
+      medium: 6,
+      high: 4,
       highest: 0
     },
-    averageCorrectRate: 65,
-    totalQuestions: 5
+    averageCorrectRate: 75,
+    totalQuestions: 14
   },
   {
     id: 'worksheet-6',
@@ -2887,15 +2962,305 @@ export const dummyWorksheets: Worksheet[] = [
     schoolLevel: '중등',
     grade: '중2',
     semester: '1학기',
-    questions: [],
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'single',
+      includeAnswers: false,
+      includeExplanations: true,
+      qrEnabled: true
+    },
+    questions: [
+      {
+        id: 'q-kor-001',
+        subject: 'korean',
+        content: '다음 시에서 화자의 정서를 가장 잘 나타낸 것은? "산길을 걸으며 / 옛 추억을 떠올린다 / 그리운 고향의 모습이 / 눈앞에 선하다"',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-1',
+          lessonId: 'lesson-2-1-1-1'
+        },
+        choices: ['기쁨', '그리움', '분노', '두려움'],
+        correctAnswer: '그리움',
+        explanation: '화자가 옛 추억과 고향을 떠올리며 느끼는 감정은 그리움입니다.',
+        correctRate: 85,
+        tags: ['시', '화자의 정서', '문학'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-002',
+        subject: 'korean',
+        content: '다음 소설의 배경을 파악하시오. "눈이 펑펑 내리는 겨울밤, 작은 시골 마을의 초가집에서..."',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-2',
+          lessonId: 'lesson-2-1-2-1'
+        },
+        correctAnswer: '겨울밤, 시골 마을',
+        explanation: '시간적 배경은 겨울밤, 공간적 배경은 시골 마을입니다.',
+        correctRate: 92,
+        tags: ['소설', '배경', '문학'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-003',
+        subject: 'korean',
+        content: '다음 중 의성어가 아닌 것은?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-3',
+          lessonId: 'lesson-2-1-3-1'
+        },
+        choices: ['멍멍', '졸졸', '반짝반짝', '쿵쿵'],
+        correctAnswer: '반짝반짝',
+        explanation: '반짝반짝은 빛의 모양을 나타내는 의태어입니다.',
+        correctRate: 78,
+        tags: ['의성어', '의태어', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-004',
+        subject: 'korean',
+        content: '다음 문장에서 주어를 찾으시오. "아름다운 꽃이 정원에 피었다."',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-4',
+          lessonId: 'lesson-2-1-4-1'
+        },
+        correctAnswer: '아름다운 꽃이',
+        explanation: '주어는 동작이나 상태의 주체를 나타내는 문장 성분입니다.',
+        correctRate: 88,
+        tags: ['문장성분', '주어', '문법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-005',
+        subject: 'korean',
+        content: '다음 시의 운율을 형성하는 요소는? "봄이 오면 / 산에 들에 / 꽃이 핀다"',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-5',
+          lessonId: 'lesson-2-1-5-1'
+        },
+        choices: ['각운', '두운', '율격', '반복'],
+        correctAnswer: '율격',
+        explanation: '3음보의 규칙적인 율격이 운율을 형성합니다.',
+        correctRate: 65,
+        tags: ['시', '운율', '율격'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-006',
+        subject: 'korean',
+        content: '다음 중 올바른 맞춤법은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-6',
+          lessonId: 'lesson-2-1-6-1'
+        },
+        choices: ['웃어른', '윗어른', '웃사람', '윗사람'],
+        correctAnswer: '윗어른',
+        explanation: '위쪽을 뜻하는 접두사는 \'윗-\'입니다.',
+        correctRate: 72,
+        tags: ['맞춤법', '접두사', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-007',
+        subject: 'korean',
+        content: '다음 글의 중심 생각을 한 문장으로 요약하시오. "독서는 우리의 지식을 넓혀준다. 또한 상상력을 기르는 데도 도움이 된다. 따라서 우리는 많은 책을 읽어야 한다."',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-7',
+          lessonId: 'lesson-2-1-7-1'
+        },
+        correctAnswer: '독서의 중요성',
+        explanation: '글 전체가 독서의 효과와 필요성을 강조하고 있습니다.',
+        correctRate: 80,
+        tags: ['독해', '중심생각', '요약'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-008',
+        subject: 'korean',
+        content: '다음 중 높임법이 잘못 사용된 것은?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-8',
+          lessonId: 'lesson-2-1-8-1'
+        },
+        choices: ['할아버지께서 오셨다.', '선생님이 말씀하셨다.', '아버지가 주무신다.', '어머니께서 요리를 하신다.'],
+        correctAnswer: '선생님이 말씀하셨다.',
+        explanation: '선생님께서 말씀하셨다가 올바른 표현입니다.',
+        correctRate: 58,
+        tags: ['높임법', '존댓말', '문법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-009',
+        subject: 'korean',
+        content: '다음 속담의 의미를 설명하시오. "가는 말이 고와야 오는 말이 곱다"',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-9',
+          lessonId: 'lesson-2-1-9-1'
+        },
+        correctAnswer: '남에게 좋게 대해야 자신도 좋은 대우를 받는다',
+        explanation: '상대방을 대하는 태도에 따라 자신이 받는 대우가 달라진다는 의미입니다.',
+        correctRate: 75,
+        tags: ['속담', '의미', '언어'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-010',
+        subject: 'korean',
+        content: '다음 중 비유법이 사용된 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-10',
+          lessonId: 'lesson-2-1-10-1'
+        },
+        choices: ['하늘이 높다', '그의 마음은 바다처럼 넓다', '새가 날아간다', '꽃이 아름답다'],
+        correctAnswer: '그의 마음은 바다처럼 넓다',
+        explanation: '마음을 바다에 비유한 직유법입니다.',
+        correctRate: 82,
+        tags: ['비유법', '직유법', '표현기법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-011',
+        subject: 'korean',
+        content: '다음 글에서 글쓴이의 주장을 찾으시오. "환경 보호는 우리 모두의 책임이다. 작은 실천부터 시작해야 한다. 분리수거, 절약 등을 생활화하자."',
+        type: 'short_answer',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-11',
+          lessonId: 'lesson-2-1-11-1'
+        },
+        correctAnswer: '환경 보호 실천의 필요성',
+        explanation: '글쓴이는 환경 보호를 위한 실천의 중요성을 주장하고 있습니다.',
+        correctRate: 86,
+        tags: ['논설문', '주장', '독해'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-012',
+        subject: 'korean',
+        content: '다음 중 외래어 표기법에 맞는 것은?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-12',
+          lessonId: 'lesson-2-1-12-1'
+        },
+        choices: ['컴퓨터', '컴퓨타', '콤퓨터', '콤퓨타'],
+        correctAnswer: '컴퓨터',
+        explanation: '외래어 표기법에 따라 \'컴퓨터\'가 올바른 표기입니다.',
+        correctRate: 68,
+        tags: ['외래어', '표기법', '맞춤법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-013',
+        subject: 'korean',
+        content: '다음 시에서 사용된 표현 기법은? "별이 내 마음에 스며든다"',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-1',
+          sectionId: 'section-2-1-13',
+          lessonId: 'lesson-2-1-13-1'
+        },
+        choices: ['의인법', '의성법', '대조법', '점층법'],
+        correctAnswer: '의인법',
+        explanation: '별이 스며든다는 표현은 사물을 사람처럼 표현한 의인법입니다.',
+        correctRate: 62,
+        tags: ['의인법', '표현기법', '시'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      }
+    ],
     difficultyDistribution: {
-      low: 1,
-      medium: 2,
-      high: 1,
+      low: 4,
+      medium: 6,
+      high: 3,
       highest: 0
     },
-    averageCorrectRate: 78,
-    totalQuestions: 4
+    averageCorrectRate: 76,
+    totalQuestions: 13
   },
   {
     id: 'worksheet-7',
@@ -2911,46 +3276,358 @@ export const dummyWorksheets: Worksheet[] = [
     schoolLevel: '중등',
     grade: '중2',
     semester: '1학기',
-    questions: [],
+    worksheetSettings: {
+      grade: '중2',
+      creator: '김선생',
+      layout: 'double',
+      includeAnswers: true,
+      includeExplanations: false,
+      qrEnabled: false
+    },
+    questions: [
+      {
+        id: 'q-kor-gram-001',
+        subject: 'korean',
+        content: '다음 중 띄어쓰기가 올바른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-1',
+          lessonId: 'lesson-2-2-1-1'
+        },
+        choices: ['한국 사람', '한국사람', '한 국사람', '한국 사 람'],
+        correctAnswer: '한국 사람',
+        explanation: '고유명사와 일반명사는 띄어 씁니다.',
+        correctRate: 88,
+        tags: ['띄어쓰기', '맞춤법', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-002',
+        subject: 'korean',
+        content: '다음 중 올바른 표기는?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-2',
+          lessonId: 'lesson-2-2-2-1'
+        },
+        choices: ['금새', '금세', '금쎄', '금시'],
+        correctAnswer: '금세',
+        explanation: '\'금세\'는 \'금시에\'의 줄임말입니다.',
+        correctRate: 72,
+        tags: ['맞춤법', '줄임말', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-003',
+        subject: 'korean',
+        content: '다음 문장에서 잘못된 부분을 찾으시오. "나는 어제 친구와 같이 영화를 보러 갔다."',
+        type: 'short_answer',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-3',
+          lessonId: 'lesson-2-2-3-1'
+        },
+        correctAnswer: '잘못된 부분이 없다',
+        explanation: '이 문장은 문법적으로 올바릅니다.',
+        correctRate: 65,
+        tags: ['문법', '문장', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-004',
+        subject: 'korean',
+        content: '다음 중 사이시옷이 필요한 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-4',
+          lessonId: 'lesson-2-2-4-1'
+        },
+        choices: ['나무잎', '바닷가', '강물', '산길'],
+        correctAnswer: '바닷가',
+        explanation: '바다+가 → 바닷가로 사이시옷이 필요합니다.',
+        correctRate: 58,
+        tags: ['사이시옷', '맞춤법', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-005',
+        subject: 'korean',
+        content: '다음 중 복수 표준어가 아닌 것은?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-5',
+          lessonId: 'lesson-2-2-5-1'
+        },
+        choices: ['문안/문안하다', '무릎/무릅', '설거지/설겆이', '어떻게/어떡해'],
+        correctAnswer: '어떻게/어떡해',
+        explanation: '어떻게와 어떡해는 의미가 다른 별개의 단어입니다.',
+        correctRate: 45,
+        tags: ['표준어', '복수표준어', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-006',
+        subject: 'korean',
+        content: '다음 중 어미 활용이 올바른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-6',
+          lessonId: 'lesson-2-2-6-1'
+        },
+        choices: ['먹어', '먹어서', '먹으니까', '먹으면서'],
+        correctAnswer: '먹어',
+        explanation: '\'먹다\'의 어간 \'먹-\'에 어미 \'-어\'가 결합한 형태입니다.',
+        correctRate: 78,
+        tags: ['어미활용', '동사활용', '문법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-007',
+        subject: 'korean',
+        content: '다음 문장에서 조사의 쓰임이 잘못된 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-7',
+          lessonId: 'lesson-2-2-7-1'
+        },
+        choices: ['나는 학교에 간다', '책을 읽는다', '친구와 놀았다', '집에서 공부한다'],
+        correctAnswer: '잘못된 것이 없다',
+        explanation: '모든 문장에서 조사가 올바르게 사용되었습니다.',
+        correctRate: 82,
+        tags: ['조사', '문법', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-008',
+        subject: 'korean',
+        content: '다음 중 된소리 표기가 올바른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-8',
+          lessonId: 'lesson-2-2-8-1'
+        },
+        choices: ['깍두기', '깎두기', '깍뚜기', '깎뚜기'],
+        correctAnswer: '깍두기',
+        explanation: '\'깍두기\'가 표준 표기법입니다.',
+        correctRate: 68,
+        tags: ['된소리', '표기법', '맞춤법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-009',
+        subject: 'korean',
+        content: '다음 중 준말이 아닌 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-9',
+          lessonId: 'lesson-2-2-9-1'
+        },
+        choices: ['안 돼', '할게', '됐어', '갔다'],
+        correctAnswer: '갔다',
+        explanation: '갔다는 준말이 아니라 \'가다\'의 과거형입니다.',
+        correctRate: 75,
+        tags: ['준말', '축약', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-010',
+        subject: 'korean',
+        content: '다음 중 한글 맞춤법에 어긋나는 것은?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-10',
+          lessonId: 'lesson-2-2-10-1'
+        },
+        choices: ['웃음', '웃기다', '웃어른', '웃음거리'],
+        correctAnswer: '웃어른',
+        explanation: '올바른 표기는 \'윗어른\'입니다.',
+        correctRate: 52,
+        tags: ['맞춤법', '접두사', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-011',
+        subject: 'korean',
+        content: '다음 문장에서 높임 표현이 적절하지 않은 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-11',
+          lessonId: 'lesson-2-2-11-1'
+        },
+        choices: ['할머니께서 주무세요', '선생님이 오셨습니다', '아버지가 말씀하셨다', '어머니께 드렸다'],
+        correctAnswer: '선생님이 오셨습니다',
+        explanation: '\'선생님께서 오셨습니다\'가 올바른 표현입니다.',
+        correctRate: 63,
+        tags: ['높임법', '존댓말', '문법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-012',
+        subject: 'korean',
+        content: '다음 중 어간과 어미의 결합이 올바른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-12',
+          lessonId: 'lesson-2-2-12-1'
+        },
+        choices: ['듣 + 어 = 들어', '짓 + 어 = 지어', '걷 + 어 = 걸어', '묻 + 어 = 물어'],
+        correctAnswer: '짓 + 어 = 지어',
+        explanation: '\'짓다\'의 어간 \'짓-\'에 \'-어\'가 결합하면 \'지어\'가 됩니다.',
+        correctRate: 48,
+        tags: ['어간', '어미', '활용'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-013',
+        subject: 'korean',
+        content: '다음 중 외래어 표기가 올바른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'low',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-13',
+          lessonId: 'lesson-2-2-13-1'
+        },
+        choices: ['라디오', '라디요', '레디오', '레디요'],
+        correctAnswer: '라디오',
+        explanation: '외래어 표기법에 따라 \'라디오\'가 올바른 표기입니다.',
+        correctRate: 85,
+        tags: ['외래어', '표기법', '맞춤법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-014',
+        subject: 'korean',
+        content: '다음 중 문장 부호 사용이 올바른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'medium',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-14',
+          lessonId: 'lesson-2-2-14-1'
+        },
+        choices: ['안녕하세요?', '정말 좋아요!', '그렇습니다.', '어디 가세요,'],
+        correctAnswer: '정말 좋아요!',
+        explanation: '감탄문에는 느낌표(!)를 사용합니다.',
+        correctRate: 79,
+        tags: ['문장부호', '표기법', '어법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      },
+      {
+        id: 'q-kor-gram-015',
+        subject: 'korean',
+        content: '다음 중 단어의 형성 방법이 다른 것은?',
+        type: 'multiple_choice',
+        difficulty: 'high',
+        source: 'internal',
+        curriculum: {
+          chapterId: 'chapter-2-2',
+          sectionId: 'section-2-2-15',
+          lessonId: 'lesson-2-2-15-1'
+        },
+        choices: ['책상', '손목', '눈물', '칠판'],
+        correctAnswer: '눈물',
+        explanation: '눈물은 합성어가 아니라 단일어입니다.',
+        correctRate: 41,
+        tags: ['단어형성', '합성어', '문법'],
+        similarQuestions: [],
+        schoolLevel: '중등',
+        grade: '중2',
+        semester: '1학기'
+      }
+    ],
     difficultyDistribution: {
-      low: 3,
-      medium: 2,
-      high: 0,
+      low: 4,
+      medium: 7,
+      high: 4,
       highest: 0
     },
-    averageCorrectRate: 85,
-    totalQuestions: 5
+    averageCorrectRate: 67,
+    totalQuestions: 15
   }
 ];
 
 // 더미 과제 데이터
 export const dummyAssignments: Assignment[] = [
-  {
-    id: 'assignment-1',
-    title: '유리수와 순환소수 기본 과제',
-    description: '기본 개념 확인을 위한 과제입니다.',
-    worksheetId: 'worksheet-1',
-    teacherId: 'teacher-1',
-    studentIds: ['student-1', 'student-2', 'student-3', 'student-4', 'student-5'],
-    assignedAt: '2024-03-01T09:30:00Z',
-    dueDate: '2024-03-08T23:59:00Z',
-    status: 'completed',
-    completionRate: 80,
-    averageScore: 75
-  },
-  {
-    id: 'assignment-2',
-    title: '식의 계산 심화 과제',
-    description: '상위권 학생을 위한 심화 과제입니다.',
-    worksheetId: 'worksheet-2',
-    teacherId: 'teacher-1',
-    studentIds: ['student-1', 'student-3'],
-    assignedAt: '2024-03-05T15:00:00Z',
-    dueDate: '2024-03-12T23:59:00Z',
-    status: 'in_progress',
-    completionRate: 50,
-    averageScore: 85
-  },
   {
     id: 'assignment-3',
     title: '영어 문법 기초 과제',
@@ -2994,37 +3671,6 @@ export const dummyAssignments: Assignment[] = [
 
 // 더미 학습 결과 데이터
 export const dummyLearningResults: LearningResult[] = [
-  {
-    id: 'result-1',
-    studentId: 'student-1',
-    assignmentId: 'assignment-1',
-    worksheetId: 'worksheet-1',
-    answers: [
-      {
-        questionId: 'q-1',
-        studentAnswer: '0.25',
-        isCorrect: true,
-        timeSpent: 45
-      },
-      {
-        questionId: 'q-2',
-        studentAnswer: '36/99',
-        isCorrect: false,
-        timeSpent: 120
-      }
-    ],
-    submittedAt: '2024-03-03T16:30:00Z',
-    totalScore: 75,
-    correctRate: 50,
-    totalTimeSpent: 165,
-    difficultyPerformance: {
-      low: { correct: 0, total: 0, rate: 0 },
-      medium: { correct: 1, total: 1, rate: 100 },
-      high: { correct: 0, total: 1, rate: 0 },
-      highest: { correct: 0, total: 0, rate: 0 }
-    },
-    gradingStatus: 'auto_graded'
-  },
   {
     id: 'result-2',
     studentId: 'student-1',
@@ -3075,31 +3721,6 @@ export const dummyLearningResults: LearningResult[] = [
     },
     gradingStatus: 'auto_graded'
   },
-  {
-    id: 'result-4',
-    studentId: 'student-3',
-    assignmentId: 'assignment-2',
-    worksheetId: 'worksheet-2',
-    answers: [
-      {
-        questionId: 'q-3',
-        studentAnswer: '72x⁸',
-        isCorrect: true,
-        timeSpent: 180
-      }
-    ],
-    submittedAt: '2024-03-07T14:20:00Z',
-    totalScore: 100,
-    correctRate: 100,
-    totalTimeSpent: 180,
-    difficultyPerformance: {
-      low: { correct: 0, total: 0, rate: 0 },
-      medium: { correct: 0, total: 0, rate: 0 },
-      high: { correct: 0, total: 0, rate: 0 },
-      highest: { correct: 1, total: 1, rate: 100 }
-    },
-    gradingStatus: 'auto_graded'
-  }
 ];
 
 // 더미 학생 통계 데이터

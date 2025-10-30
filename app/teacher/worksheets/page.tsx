@@ -362,15 +362,6 @@ const WorksheetsPage = () => {
                         상세보기
                       </Button>
                     </Link>
-                    
-                    {worksheet.status === 'draft' && (
-                      <Link href={`/teacher/worksheets/${worksheet.id}/edit`}>
-                        <Button variant="outline" size="sm" className="gap-2">
-                          <Edit className="h-4 w-4" />
-                          편집
-                        </Button>
-                      </Link>
-                    )}
                   </div>
                 </CardContent>
               </Card>

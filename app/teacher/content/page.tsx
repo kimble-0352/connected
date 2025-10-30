@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Filter, Upload, Eye, Share2, Download, MoreHorizontal } from 'lucide-react';
+import { Plus, Search, Upload, Eye, Share2, Download, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,7 +22,6 @@ const ContentManagementPage = () => {
   const currentUser = useCurrentUser();
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<ContentFilter>({});
-  const [showFilters, setShowFilters] = useState(false);
   const [selectedContentForShare, setSelectedContentForShare] = useState<ContentItem | null>(null);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [isSavingShare, setIsSavingShare] = useState(false);
@@ -185,109 +184,6 @@ const ContentManagementPage = () => {
         </Link>
       </div>
 
-      {/* 검색 및 필터 */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                placeholder="제목, 설명, 학교명, 태그로 검색..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Button
-              variant="outline"
-              onClick={() => setShowFilters(!showFilters)}
-              className="gap-2"
-            >
-              <Filter className="h-4 w-4" />
-              필터
-            </Button>
-          </div>
-
-          {showFilters && (
-            <>
-              <Separator className="my-4" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">과목</label>
-                  <Select value={filter.subject || 'all'} onValueChange={(value) => 
-                    setFilter(prev => ({ ...prev, subject: value === 'all' ? undefined : value as Subject }))
-                  }>
-                    <SelectTrigger>
-                      <SelectValue placeholder="전체" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">전체</SelectItem>
-                      <SelectItem value="math">수학</SelectItem>
-                      <SelectItem value="english">영어</SelectItem>
-                      <SelectItem value="korean">국어</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-2 block">상태</label>
-                  <Select value={filter.status || 'all'} onValueChange={(value) => 
-                    setFilter(prev => ({ ...prev, status: value === 'all' ? undefined : value as any }))
-                  }>
-                    <SelectTrigger>
-                      <SelectValue placeholder="전체" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">전체</SelectItem>
-                      <SelectItem value="completed">완료</SelectItem>
-                      <SelectItem value="processing">처리중</SelectItem>
-                      <SelectItem value="failed">실패</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-2 block">공유 설정</label>
-                  <Select value={filter.sharingType || 'all'} onValueChange={(value) => 
-                    setFilter(prev => ({ ...prev, sharingType: value === 'all' ? undefined : value as any }))
-                  }>
-                    <SelectTrigger>
-                      <SelectValue placeholder="전체" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">전체</SelectItem>
-                      <SelectItem value="public">전체 공개</SelectItem>
-                      <SelectItem value="selective">선택 공유</SelectItem>
-                      <SelectItem value="private">비공개</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-2 block">학년</label>
-                  <Select value={filter.grade || 'all'} onValueChange={(value) => 
-                    setFilter(prev => ({ ...prev, grade: value === 'all' ? undefined : value }))
-                  }>
-                    <SelectTrigger>
-                      <SelectValue placeholder="전체" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">전체</SelectItem>
-                      <SelectItem value="중1">중1</SelectItem>
-                      <SelectItem value="중2">중2</SelectItem>
-                      <SelectItem value="중3">중3</SelectItem>
-                      <SelectItem value="고1">고1</SelectItem>
-                      <SelectItem value="고2">고2</SelectItem>
-                      <SelectItem value="고3">고3</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
-
       {/* 통계 요약 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
@@ -321,6 +217,93 @@ const ContentManagementPage = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* 검색 및 필터 */}
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="제목, 설명, 학교명, 태그로 검색..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div>
+                  <Select value={filter.subject || 'all'} onValueChange={(value) => 
+                    setFilter(prev => ({ ...prev, subject: value === 'all' ? undefined : value as Subject }))
+                  }>
+                    <SelectTrigger className="h-9 w-full">
+                      <SelectValue placeholder="과목" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">전체</SelectItem>
+                      <SelectItem value="math">수학</SelectItem>
+                      <SelectItem value="english">영어</SelectItem>
+                      <SelectItem value="korean">국어</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Select value={filter.status || 'all'} onValueChange={(value) => 
+                    setFilter(prev => ({ ...prev, status: value === 'all' ? undefined : value as any }))
+                  }>
+                    <SelectTrigger className="h-9 w-full">
+                      <SelectValue placeholder="상태" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">전체</SelectItem>
+                      <SelectItem value="completed">완료</SelectItem>
+                      <SelectItem value="processing">처리중</SelectItem>
+                      <SelectItem value="failed">실패</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Select value={filter.sharingType || 'all'} onValueChange={(value) => 
+                    setFilter(prev => ({ ...prev, sharingType: value === 'all' ? undefined : value as any }))
+                  }>
+                    <SelectTrigger className="h-9 w-full">
+                      <SelectValue placeholder="공유 설정" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">전체</SelectItem>
+                      <SelectItem value="public">전체 공개</SelectItem>
+                      <SelectItem value="selective">선택 공유</SelectItem>
+                      <SelectItem value="private">비공개</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Select value={filter.grade || 'all'} onValueChange={(value) => 
+                    setFilter(prev => ({ ...prev, grade: value === 'all' ? undefined : value }))
+                  }>
+                    <SelectTrigger className="h-9 w-full">
+                      <SelectValue placeholder="학년" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">전체</SelectItem>
+                      <SelectItem value="중1">중1</SelectItem>
+                      <SelectItem value="중2">중2</SelectItem>
+                      <SelectItem value="중3">중3</SelectItem>
+                      <SelectItem value="고1">고1</SelectItem>
+                      <SelectItem value="고2">고2</SelectItem>
+                      <SelectItem value="고3">고3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* 콘텐츠 목록 */}
       <div className="space-y-4">
